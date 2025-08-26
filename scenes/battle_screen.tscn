@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://brayl5720tpcc"]
+
+[ext_resource type="Texture2D" uid="uid://u6fdd60yqtvp" path="res://assets/background_placeholder.jpg" id="1_441kk"]
+
+[node name="Battle Screen" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -11.0
+offset_top = -9.0
+offset_right = 373.0
+offset_bottom = 372.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -8.0
+offset_top = 39.0
+offset_right = 372.0
+offset_bottom = 324.0
+texture = ExtResource("1_441kk")
+expand_mode = 1
+stretch_mode = 4

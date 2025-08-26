@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Golden Biscuit"
-run/main_scene="uid://dr0j3j4hengc6"
+run/main_scene="uid://brayl5720tpcc"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
