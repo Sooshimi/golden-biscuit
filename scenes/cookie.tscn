@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://fc4yacs1tuot"]
+
+[ext_resource type="Texture2D" uid="uid://ccxjrnt2xthw4" path="res://assets/donut.png" id="1_i5c4t"]
+[ext_resource type="Script" uid="uid://eff2113j5yd6" path="res://scripts/cookie.gd" id="1_yys3m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i5c4t"]
+radius = 11.0
+
+[node name="Cookie" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource("1_yys3m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("1_i5c4t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_i5c4t")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_i5c4t")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

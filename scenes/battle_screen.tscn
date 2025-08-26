@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=5 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Texture2D" uid="uid://u6fdd60yqtvp" path="res://assets/background_placeholder.jpg" id="1_441kk"]
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen.gd" id="1_jkca0"]
+[ext_resource type="PackedScene" uid="uid://fc4yacs1tuot" path="res://scenes/cookie.tscn" id="3_y5my5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jkca0"]
+size = Vector2(261, 103)
 
 [node name="Battle Screen" type="Node2D"]
 script = ExtResource("1_jkca0")
@@ -20,6 +24,14 @@ offset_bottom = 324.0
 texture = ExtResource("1_441kk")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="bet_area" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="bet_area"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bet_area/Area2D"]
+position = Vector2(180.5, 175.5)
+shape = SubResource("RectangleShape2D_jkca0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -49,6 +61,9 @@ offset_right = 293.0
 offset_bottom = 215.0
 text = "0"
 horizontal_alignment = 1
+
+[node name="Cookie" parent="." instance=ExtResource("3_y5my5")]
+position = Vector2(262, 272)
 
 [connection signal="pressed" from="CanvasLayer/paw_button" to="." method="_on_paw_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/claw_button" to="." method="_on_claw_button_pressed"]
