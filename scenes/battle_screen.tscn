@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=3 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Texture2D" uid="uid://u6fdd60yqtvp" path="res://assets/background_placeholder.jpg" id="1_441kk"]
+[ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen.gd" id="1_jkca0"]
 
 [node name="Battle Screen" type="Node2D"]
+script = ExtResource("1_jkca0")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -11.0
@@ -18,3 +20,34 @@ offset_bottom = 324.0
 texture = ExtResource("1_441kk")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="paw_button" type="Button" parent="CanvasLayer"]
+offset_left = 72.0
+offset_top = 237.0
+offset_right = 109.0
+offset_bottom = 272.0
+
+[node name="claw_button" type="Button" parent="CanvasLayer"]
+offset_left = 120.0
+offset_top = 237.0
+offset_right = 157.0
+offset_bottom = 272.0
+
+[node name="roar_button" type="Button" parent="CanvasLayer"]
+offset_left = 172.0
+offset_top = 237.0
+offset_right = 209.0
+offset_bottom = 272.0
+
+[node name="cookie_counter" type="Label" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 242.0
+offset_top = 190.0
+offset_right = 293.0
+offset_bottom = 215.0
+text = "0"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer/paw_button" to="." method="_on_paw_button_pressed"]
