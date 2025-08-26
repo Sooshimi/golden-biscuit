@@ -51,3 +51,5 @@ text = "0"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="CanvasLayer/paw_button" to="." method="_on_paw_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/claw_button" to="." method="_on_claw_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/roar_button" to="." method="_on_roar_button_pressed"]
