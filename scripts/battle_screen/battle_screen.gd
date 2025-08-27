@@ -54,14 +54,21 @@ func battle() -> void:
 	
 	if player_choice == enemy_choice:
 		print("draw")
-	elif (player_choice == "roar" and enemy_choice == "paw" 
-	or player_choice == "paw" and enemy_choice == "claw" 
-	or player_choice == "claw" and enemy_choice == "roar"):
+	elif player_choice == "roar" and enemy_choice == "paw":
 		print("player win")
-		Global.total_cookies += 1
-	else:
+		Global.total_cookies += roar_cookie_pot.size()
+	elif player_choice == "paw" and enemy_choice == "claw":
+		print("player win")
+		Global.total_cookies += paw_cookie_pot.size()
+	elif player_choice == "claw" and enemy_choice == "roar":
+		print("player win")
+		Global.total_cookies += claw_cookie_pot.size()
+	elif enemy_choice == "roar" and player_choice == "paw":
 		print("player lose")
-		Global.total_cookies -= 1
+	elif enemy_choice == "paw" and player_choice == "claw":
+		print("player lose")
+	elif enemy_choice == "claw" and player_choice == "roar":
+		print("player lose")
 	
 	update_score()
 
