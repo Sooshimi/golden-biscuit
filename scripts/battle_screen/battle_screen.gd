@@ -14,24 +14,24 @@ var enemy_choice := ""
 var player_choice := ""
 var choices := ["paw", "claw", "roar"]
 
-var paw_cookies_list := []
-var claw_cookies_list := []
-var roar_cookies_list := []
+var paw_cookie_pot := []
+var claw_cookie_pot := []
+var roar_cookie_pot := []
 
 func _ready() -> void:
 	update_score()
 	spawn_cookie()
 
 func _process(_delta) -> void:
-	for body in paw_cookies_list:
+	for body in paw_cookie_pot:
 		if not body.selected and body.linear_velocity == Vector2.ZERO:
 			update_paw_cookie_counter(body)
 	
-	for body in claw_cookies_list:
+	for body in claw_cookie_pot:
 		if not body.selected and body.linear_velocity == Vector2.ZERO:
 			update_claw_cookie_counter(body)
 	
-	for body in roar_cookies_list:
+	for body in roar_cookie_pot:
 		if not body.selected and body.linear_velocity == Vector2.ZERO:
 			update_roar_cookie_counter(body)
 
@@ -80,41 +80,41 @@ func _on_roar_button_pressed() -> void:
 # COOKIES ENTERS PAW AREA
 func _on_paw_area_body_entered(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies"):
-		paw_cookies_list.append(body)
+		paw_cookie_pot.append(body)
 
 # COOKIES EXITS PAW AREA
 func _on_paw_area_body_exited(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies") and paw_cookies_list.size() > 0:
-		paw_cookies_list.remove_at(0)
+	if body.is_in_group("cookies") and paw_cookie_pot.size() > 0:
+		paw_cookie_pot.remove_at(0)
 
 # COOKIES ENTERS CLAW AREA
 func _on_claw_area_body_entered(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies"):
-		claw_cookies_list.append(body)
+		claw_cookie_pot.append(body)
 
 # COOKIES EXITS CLAW AREA
 func _on_claw_area_body_exited(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies") and claw_cookies_list.size() > 0:
-		claw_cookies_list.remove_at(0)
+	if body.is_in_group("cookies") and claw_cookie_pot.size() > 0:
+		claw_cookie_pot.remove_at(0)
 
 # COOKIES ENTERS ROAR AREA
 func _on_roar_area_body_entered(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies"):
-		roar_cookies_list.append(body)
+		roar_cookie_pot.append(body)
 
 # COOKIES EXITS ROAR AREA
 func _on_roar_area_body_exited(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies") and roar_cookies_list.size() > 0:
-		roar_cookies_list.remove_at(0)
+	if body.is_in_group("cookies") and roar_cookie_pot.size() > 0:
+		roar_cookie_pot.remove_at(0)
 
 func update_paw_cookie_counter(body: RigidBody2D) -> void:
-	paw_cookie_counter.text = str(paw_cookies_list.size())
+	paw_cookie_counter.text = str(paw_cookie_pot.size())
 
 func update_claw_cookie_counter(body: RigidBody2D) -> void:
-	claw_cookie_counter.text = str(claw_cookies_list.size())
+	claw_cookie_counter.text = str(claw_cookie_pot.size())
 
 func update_roar_cookie_counter(body: RigidBody2D) -> void:
-	roar_cookie_counter.text = str(roar_cookies_list.size())
+	roar_cookie_counter.text = str(roar_cookie_pot.size())
 
 func _on_cookier_spawn_area_body_exited(body: RigidBody2D) -> void:
 	body.collision_mask = 1
