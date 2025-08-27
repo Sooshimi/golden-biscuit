@@ -3,7 +3,6 @@ extends RigidBody2D
 var follow_speed := 25
 var selected := false
 var thrown := false
-var bet_counted := false
 var throw_velocity := Vector2.ZERO
 var throw_velocity_reduce := 3
 

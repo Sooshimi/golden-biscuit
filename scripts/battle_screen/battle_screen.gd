@@ -24,15 +24,15 @@ func _ready() -> void:
 
 func _process(_delta) -> void:
 	for body in paw_cookies_list:
-		if not body.selected and body.linear_velocity == Vector2.ZERO and not body.bet_counted:
+		if not body.selected and body.linear_velocity == Vector2.ZERO:
 			update_paw_cookie_counter(body)
 	
 	for body in claw_cookies_list:
-		if not body.selected and body.linear_velocity == Vector2.ZERO and not body.bet_counted:
+		if not body.selected and body.linear_velocity == Vector2.ZERO:
 			update_claw_cookie_counter(body)
 	
 	for body in roar_cookies_list:
-		if not body.selected and body.linear_velocity == Vector2.ZERO and not body.bet_counted:
+		if not body.selected and body.linear_velocity == Vector2.ZERO:
 			update_roar_cookie_counter(body)
 
 func spawn_cookie() -> void:
@@ -108,15 +108,12 @@ func _on_roar_area_body_exited(body: RigidBody2D) -> void:
 		roar_cookies_list.remove_at(0)
 
 func update_paw_cookie_counter(body: RigidBody2D) -> void:
-	body.bet_counted = true
 	paw_cookie_counter.text = str(paw_cookies_list.size())
 
 func update_claw_cookie_counter(body: RigidBody2D) -> void:
-	body.bet_counted = true
 	claw_cookie_counter.text = str(claw_cookies_list.size())
 
 func update_roar_cookie_counter(body: RigidBody2D) -> void:
-	body.bet_counted = true
 	roar_cookie_counter.text = str(roar_cookies_list.size())
 
 func _on_cookier_spawn_area_body_exited(body: RigidBody2D) -> void:
