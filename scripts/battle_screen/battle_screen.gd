@@ -24,17 +24,20 @@ func _ready() -> void:
 	spawn_cookie()
 
 func _process(_delta) -> void:
-	for body in paw_cookie_pot:
-		if not body.selected and body.linear_velocity == Vector2.ZERO:
-			update_paw_cookie_counter(body)
+	if paw_cookie_pot.size() > 0:
+		for body in paw_cookie_pot:
+			if not body.selected and body.linear_velocity == Vector2.ZERO:
+				update_paw_cookie_counter(body)
 	
-	for body in claw_cookie_pot:
-		if not body.selected and body.linear_velocity == Vector2.ZERO:
-			update_claw_cookie_counter(body)
+	if claw_cookie_pot.size() > 0:
+		for body in claw_cookie_pot:
+			if not body.selected and body.linear_velocity == Vector2.ZERO:
+				update_claw_cookie_counter(body)
 	
-	for body in roar_cookie_pot:
-		if not body.selected and body.linear_velocity == Vector2.ZERO:
-			update_roar_cookie_counter(body)
+	if roar_cookie_pot.size() > 0:
+		for body in roar_cookie_pot:
+			if not body.selected and body.linear_velocity == Vector2.ZERO:
+				update_roar_cookie_counter(body)
 
 func spawn_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
@@ -58,20 +61,44 @@ func battle() -> void:
 	elif player_choice == "roar" and enemy_choice == "paw":
 		print("player win")
 		Global.total_cookies += roar_cookie_pot.size()
+		remove_roar_cookies()
 	elif player_choice == "paw" and enemy_choice == "claw":
 		print("player win")
 		Global.total_cookies += paw_cookie_pot.size()
+		remove_paw_cookies()
 	elif player_choice == "claw" and enemy_choice == "roar":
 		print("player win")
 		Global.total_cookies += claw_cookie_pot.size()
+		remove_claw_cookies()
 	elif enemy_choice == "roar" and player_choice == "paw":
 		print("player lose")
+		remove_roar_cookies()
 	elif enemy_choice == "paw" and player_choice == "claw":
 		print("player lose")
+		remove_paw_cookies()
 	elif enemy_choice == "claw" and player_choice == "roar":
 		print("player lose")
+		remove_claw_cookies()
 	
 	update_score()
+
+func remove_roar_cookies() -> void:
+	for body in roar_cookie_pot:
+		body.queue_free()
+	roar_cookie_pot = []
+	roar_cookie_counter.text = str(0)
+
+func remove_claw_cookies() -> void:
+	for body in claw_cookie_pot:
+		body.queue_free()
+	claw_cookie_pot = []
+	claw_cookie_counter.text = str(0)
+
+func remove_paw_cookies() -> void:
+	for body in paw_cookie_pot:
+		body.queue_free()
+	paw_cookie_pot = []
+	paw_cookie_counter.text = str(0)
 
 func _on_paw_button_pressed() -> void:
 	player_choice = "paw"
