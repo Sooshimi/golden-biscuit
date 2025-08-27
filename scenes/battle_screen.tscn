@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Texture2D" uid="uid://u6fdd60yqtvp" path="res://assets/background_placeholder.jpg" id="1_441kk"]
-[ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen.gd" id="1_jkca0"]
+[ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="PackedScene" uid="uid://fc4yacs1tuot" path="res://scenes/cookie.tscn" id="3_y5my5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkca0"]
@@ -105,6 +105,12 @@ horizontal_alignment = 1
 [node name="Cookie" parent="." instance=ExtResource("3_y5my5")]
 position = Vector2(263, 271)
 
+[connection signal="body_entered" from="bet_area/PawArea" to="." method="_on_paw_area_body_entered"]
+[connection signal="body_exited" from="bet_area/PawArea" to="." method="_on_paw_area_body_exited"]
+[connection signal="body_entered" from="bet_area/ClawArea" to="." method="_on_claw_area_body_entered"]
+[connection signal="body_exited" from="bet_area/ClawArea" to="." method="_on_claw_area_body_exited"]
+[connection signal="body_entered" from="bet_area/RoarArea" to="." method="_on_roar_area_body_entered"]
+[connection signal="body_exited" from="bet_area/RoarArea" to="." method="_on_roar_area_body_exited"]
 [connection signal="pressed" from="CanvasLayer/paw_button" to="." method="_on_paw_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/claw_button" to="." method="_on_claw_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/roar_button" to="." method="_on_roar_button_pressed"]
