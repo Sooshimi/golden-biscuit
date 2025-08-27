@@ -77,26 +77,32 @@ func _on_roar_button_pressed() -> void:
 	player_choice = "roar"
 	battle()
 
+# COOKIES ENTERS PAW AREA
 func _on_paw_area_body_entered(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies"):
 		paw_cookies_list.append(body)
 
+# COOKIES EXITS PAW AREA
 func _on_paw_area_body_exited(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies") and paw_cookies_list.size() > 0:
 		paw_cookies_list.remove_at(0)
 
+# COOKIES ENTERS CLAW AREA
 func _on_claw_area_body_entered(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies"):
 		claw_cookies_list.append(body)
 
+# COOKIES EXITS CLAW AREA
 func _on_claw_area_body_exited(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies") and claw_cookies_list.size() > 0:
 		claw_cookies_list.remove_at(0)
 
+# COOKIES ENTERS ROAR AREA
 func _on_roar_area_body_entered(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies"):
 		roar_cookies_list.append(body)
 
+# COOKIES EXITS ROAR AREA
 func _on_roar_area_body_exited(body: RigidBody2D) -> void:
 	if body.is_in_group("cookies") and roar_cookies_list.size() > 0:
 		roar_cookies_list.remove_at(0)
