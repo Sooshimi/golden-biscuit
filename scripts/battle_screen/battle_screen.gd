@@ -17,6 +17,7 @@ var choices := ["paw", "claw", "roar"]
 var paw_cookie_pot := []
 var claw_cookie_pot := []
 var roar_cookie_pot := []
+var cookie_holder_pot := []
 
 func _ready() -> void:
 	update_score()
@@ -86,32 +87,29 @@ func _on_roar_button_pressed() -> void:
 
 # COOKIES ENTERS PAW AREA
 func _on_paw_area_body_entered(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies"):
-		paw_cookie_pot.append(body)
+	paw_cookie_pot.append(body)
 
 # COOKIES EXITS PAW AREA
 func _on_paw_area_body_exited(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies") and paw_cookie_pot.size() > 0:
+	if paw_cookie_pot.size() > 0:
 		paw_cookie_pot.remove_at(0)
 
 # COOKIES ENTERS CLAW AREA
 func _on_claw_area_body_entered(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies"):
-		claw_cookie_pot.append(body)
+	claw_cookie_pot.append(body)
 
 # COOKIES EXITS CLAW AREA
 func _on_claw_area_body_exited(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies") and claw_cookie_pot.size() > 0:
+	if claw_cookie_pot.size() > 0:
 		claw_cookie_pot.remove_at(0)
 
 # COOKIES ENTERS ROAR AREA
 func _on_roar_area_body_entered(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies"):
-		roar_cookie_pot.append(body)
+	roar_cookie_pot.append(body)
 
 # COOKIES EXITS ROAR AREA
 func _on_roar_area_body_exited(body: RigidBody2D) -> void:
-	if body.is_in_group("cookies") and roar_cookie_pot.size() > 0:
+	if roar_cookie_pot.size() > 0:
 		roar_cookie_pot.remove_at(0)
 
 func update_paw_cookie_counter(body: RigidBody2D) -> void:
@@ -125,8 +123,15 @@ func update_roar_cookie_counter(body: RigidBody2D) -> void:
 
 func _on_cookier_spawn_area_body_exited(body: RigidBody2D) -> void:
 	body.collision_mask = 1
+	cookie_holder_pot.remove_at(0)
 	
-	spawn_cookie()
+	if cookie_holder_pot.size() < 1:
+		Global.total_cookies -= 1
+	
+	if Global.total_cookies > 0 and cookie_holder_pot.size() < 1:
+		spawn_cookie()
+	
+	update_score()
 
 func _on_cookier_spawn_area_body_entered(body: RigidBody2D) -> void:
-	pass
+	cookie_holder_pot.append(body)
