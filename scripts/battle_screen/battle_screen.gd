@@ -40,7 +40,7 @@ func _process(_delta) -> void:
 
 func spawn_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
-	cookie.global_position = Vector2(170,300)
+	cookie.global_position = Vector2(180,300)
 	cookie.collision_mask = 0
 	add_child(cookie)
 

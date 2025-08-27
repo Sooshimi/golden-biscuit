@@ -105,9 +105,9 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="cookier_spawn_area" type="Area2D" parent="CanvasLayer"]
+position = Vector2(180, 325)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/cookier_spawn_area"]
-position = Vector2(263, 268)
 shape = SubResource("CircleShape2D_jkca0")
 
 [connection signal="body_entered" from="bet_area/PawArea" to="." method="_on_paw_area_body_entered"]
