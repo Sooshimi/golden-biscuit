@@ -7,6 +7,9 @@ extends Node2D
 @onready var paw_cookie_counter := $CanvasLayer/paw_cookie_counter
 @onready var claw_cookie_counter := $CanvasLayer/claw_cookie_counter
 @onready var roar_cookie_counter := $CanvasLayer/roar_cookie_counter
+@onready var paw_cookie_area := $bet_area/PawArea
+@onready var claw_cookie_area := $bet_area/ClawArea
+@onready var roar_cookie_area := $bet_area/RoarArea
 
 var cookie_scene: PackedScene = preload("res://scenes/cookie.tscn")
 
@@ -83,20 +86,23 @@ func battle() -> void:
 	update_score()
 
 func remove_roar_cookies() -> void:
-	for body in roar_cookie_pot:
+	for body in roar_cookie_area.get_overlapping_bodies():
 		body.queue_free()
+		roar_cookie_area.get_overlapping_bodies().erase(0)
 	roar_cookie_pot = []
 	roar_cookie_counter.text = str(0)
 
 func remove_claw_cookies() -> void:
-	for body in claw_cookie_pot:
+	for body in claw_cookie_area.get_overlapping_bodies():
 		body.queue_free()
+		claw_cookie_area.get_overlapping_bodies().erase(0)
 	claw_cookie_pot = []
 	claw_cookie_counter.text = str(0)
 
 func remove_paw_cookies() -> void:
-	for body in paw_cookie_pot:
+	for body in paw_cookie_area.get_overlapping_bodies():
 		body.queue_free()
+		paw_cookie_area.get_overlapping_bodies().erase(0)
 	paw_cookie_pot = []
 	paw_cookie_counter.text = str(0)
 
