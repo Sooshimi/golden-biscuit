@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_i5c4t"]
 radius = 11.0
 
-[node name="Cookie" type="RigidBody2D"]
+[node name="Cookie" type="RigidBody2D" groups=["cookies"]]
 gravity_scale = 0.0
 script = ExtResource("1_yys3m")
 

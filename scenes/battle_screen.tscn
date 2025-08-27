@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://fc4yacs1tuot" path="res://scenes/cookie.tscn" id="3_y5my5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkca0"]
-size = Vector2(261, 103)
+size = Vector2(70.375, 93.5)
 
 [node name="Battle Screen" type="Node2D"]
 script = ExtResource("1_jkca0")
@@ -27,10 +27,23 @@ stretch_mode = 4
 
 [node name="bet_area" type="Node2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="bet_area"]
+[node name="PawArea" type="Area2D" parent="bet_area"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bet_area/Area2D"]
-position = Vector2(180.5, 175.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bet_area/PawArea"]
+position = Vector2(103.812, 171)
+shape = SubResource("RectangleShape2D_jkca0")
+
+[node name="ClawArea" type="Area2D" parent="bet_area"]
+position = Vector2(6.24, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bet_area/ClawArea"]
+position = Vector2(171.76, 171)
+shape = SubResource("RectangleShape2D_jkca0")
+
+[node name="RoarArea" type="Area2D" parent="bet_area"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bet_area/RoarArea"]
+position = Vector2(252, 171)
 shape = SubResource("RectangleShape2D_jkca0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -55,15 +68,42 @@ offset_bottom = 272.0
 
 [node name="cookie_counter" type="Label" parent="CanvasLayer"]
 modulate = Color(0, 0, 0, 1)
-offset_left = 242.0
-offset_top = 190.0
-offset_right = 293.0
-offset_bottom = 215.0
+offset_left = 301.0
+offset_top = 248.0
+offset_right = 352.0
+offset_bottom = 273.0
+text = "0"
+horizontal_alignment = 1
+
+[node name="paw_cookie_counter" type="Label" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 82.0
+offset_top = 121.0
+offset_right = 122.0
+offset_bottom = 144.0
+text = "0"
+horizontal_alignment = 1
+
+[node name="claw_cookie_counter" type="Label" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 157.0
+offset_top = 121.0
+offset_right = 197.0
+offset_bottom = 144.0
+text = "0"
+horizontal_alignment = 1
+
+[node name="roar_cookie_counter" type="Label" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 232.0
+offset_top = 122.0
+offset_right = 272.0
+offset_bottom = 145.0
 text = "0"
 horizontal_alignment = 1
 
 [node name="Cookie" parent="." instance=ExtResource("3_y5my5")]
-position = Vector2(262, 272)
+position = Vector2(263, 271)
 
 [connection signal="pressed" from="CanvasLayer/paw_button" to="." method="_on_paw_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/claw_button" to="." method="_on_claw_button_pressed"]
