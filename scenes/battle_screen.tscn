@@ -2,10 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://u6fdd60yqtvp" path="res://assets/background_placeholder.jpg" id="1_441kk"]
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
-[ext_resource type="PackedScene" uid="uid://fc4yacs1tuot" path="res://scenes/cookie.tscn" id="3_y5my5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkca0"]
 size = Vector2(70.375, 93.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jkca0"]
+radius = 21.0
 
 [node name="Battle Screen" type="Node2D"]
 script = ExtResource("1_jkca0")
@@ -102,8 +104,11 @@ offset_bottom = 145.0
 text = "0"
 horizontal_alignment = 1
 
-[node name="Cookie" parent="." instance=ExtResource("3_y5my5")]
-position = Vector2(263, 271)
+[node name="cookier_spawn_area" type="Area2D" parent="CanvasLayer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/cookier_spawn_area"]
+position = Vector2(263, 268)
+shape = SubResource("CircleShape2D_jkca0")
 
 [connection signal="body_entered" from="bet_area/PawArea" to="." method="_on_paw_area_body_entered"]
 [connection signal="body_exited" from="bet_area/PawArea" to="." method="_on_paw_area_body_exited"]
@@ -114,3 +119,5 @@ position = Vector2(263, 271)
 [connection signal="pressed" from="CanvasLayer/paw_button" to="." method="_on_paw_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/claw_button" to="." method="_on_claw_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/roar_button" to="." method="_on_roar_button_pressed"]
+[connection signal="body_entered" from="CanvasLayer/cookier_spawn_area" to="." method="_on_cookier_spawn_area_body_entered"]
+[connection signal="body_exited" from="CanvasLayer/cookier_spawn_area" to="." method="_on_cookier_spawn_area_body_exited"]

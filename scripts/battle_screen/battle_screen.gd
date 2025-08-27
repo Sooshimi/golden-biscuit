@@ -8,6 +8,8 @@ extends Node2D
 @onready var claw_cookie_counter := $CanvasLayer/claw_cookie_counter
 @onready var roar_cookie_counter := $CanvasLayer/roar_cookie_counter
 
+var cookie_scene: PackedScene = preload("res://scenes/cookie.tscn")
+
 var enemy_choice := ""
 var player_choice := ""
 var choices := ["paw", "claw", "roar"]
@@ -21,8 +23,9 @@ var roar_cookies_list := []
 
 func _ready() -> void:
 	update_score()
+	spawn_cookie()
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	for body in paw_cookies_list:
 		if not body.selected and body.linear_velocity == Vector2.ZERO and not body.bet_counted:
 			update_paw_cookie_counter(body)
@@ -34,6 +37,12 @@ func _process(delta) -> void:
 	for body in roar_cookies_list:
 		if not body.selected and body.linear_velocity == Vector2.ZERO and not body.bet_counted:
 			update_roar_cookie_counter(body)
+
+func spawn_cookie() -> void:
+	var cookie = cookie_scene.instantiate()
+	cookie.global_position = Vector2(170,300)
+	cookie.collision_mask = 0
+	add_child(cookie)
 
 func update_score() -> void:
 	cookie_counter.text = str(Global.total_cookies)
@@ -109,3 +118,11 @@ func update_roar_cookie_counter(body: RigidBody2D) -> void:
 	roar_cookie_counter_int += 1
 	roar_cookie_counter.text = str(roar_cookie_counter_int)
 	body.bet_counted = true
+
+func _on_cookier_spawn_area_body_exited(body):
+	body.collision_mask = 1
+	
+	spawn_cookie()
+
+func _on_cookier_spawn_area_body_entered(body):
+	pass
