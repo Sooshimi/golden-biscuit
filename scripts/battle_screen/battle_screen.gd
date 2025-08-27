@@ -13,9 +13,6 @@ var cookie_scene: PackedScene = preload("res://scenes/cookie.tscn")
 var enemy_choice := ""
 var player_choice := ""
 var choices := ["paw", "claw", "roar"]
-var paw_cookie_counter_int := 0
-var claw_cookie_counter_int := 0
-var roar_cookie_counter_int := 0
 
 var paw_cookies_list := []
 var claw_cookies_list := []
@@ -105,19 +102,16 @@ func _on_roar_area_body_exited(body: RigidBody2D) -> void:
 		roar_cookies_list.remove_at(0)
 
 func update_paw_cookie_counter(body: RigidBody2D) -> void:
-	paw_cookie_counter_int += 1
-	paw_cookie_counter.text = str(paw_cookie_counter_int)
 	body.bet_counted = true
+	paw_cookie_counter.text = str(paw_cookies_list.size())
 
 func update_claw_cookie_counter(body: RigidBody2D) -> void:
-	claw_cookie_counter_int += 1
-	claw_cookie_counter.text = str(claw_cookie_counter_int)
 	body.bet_counted = true
+	claw_cookie_counter.text = str(claw_cookies_list.size())
 
 func update_roar_cookie_counter(body: RigidBody2D) -> void:
-	roar_cookie_counter_int += 1
-	roar_cookie_counter.text = str(roar_cookie_counter_int)
 	body.bet_counted = true
+	roar_cookie_counter.text = str(roar_cookies_list.size())
 
 func _on_cookier_spawn_area_body_exited(body: RigidBody2D) -> void:
 	body.collision_mask = 1
