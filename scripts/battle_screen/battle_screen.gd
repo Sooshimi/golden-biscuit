@@ -64,51 +64,27 @@ func battle() -> void:
 			print("player win")
 			Global.total_cookies += roar_cookie_pot.size()
 			remove_roar_cookies()
-			PhaseManager.current_state = 0
-			bet_phase_label.text = "Place your cookies!"
-			bet_phase_timer.start()
 		elif player_choice == "paw" and enemy_choice == "claw":
 			if Global.total_cookies == 0:
 				spawn_cookie()
 			print("player win")
 			Global.total_cookies += paw_cookie_pot.size()
 			remove_paw_cookies()
-			PhaseManager.current_state = 0
-			bet_phase_label.text = "Place your cookies!"
-			bet_phase_timer.start()
 		elif player_choice == "claw" and enemy_choice == "roar":
 			if Global.total_cookies == 0:
 				spawn_cookie()
 			print("player win")
 			Global.total_cookies += claw_cookie_pot.size()
 			remove_claw_cookies()
-			PhaseManager.current_state = 0
-			bet_phase_label.text = "Place your cookies!"
-			bet_phase_timer.start()
 		elif enemy_choice == "roar" and player_choice == "paw":
-			if Global.total_cookies == 0:
-				spawn_cookie()
 			print("player lose")
 			remove_roar_cookies()
-			PhaseManager.current_state = 0
-			bet_phase_label.text = "Place your cookies!"
-			bet_phase_timer.start()
 		elif enemy_choice == "paw" and player_choice == "claw":
-			if Global.total_cookies == 0:
-				spawn_cookie()
 			print("player lose")
 			remove_paw_cookies()
-			PhaseManager.current_state = 0
-			bet_phase_label.text = "Place your cookies!"
-			bet_phase_timer.start()
 		elif enemy_choice == "claw" and player_choice == "roar":
-			if Global.total_cookies == 0:
-				spawn_cookie()
 			print("player lose")
 			remove_claw_cookies()
-			PhaseManager.current_state = 0
-			bet_phase_label.text = "Place your cookies!"
-			bet_phase_timer.start()
 
 func remove_roar_cookies() -> void:
 	roar_cookie_pot = []
@@ -120,6 +96,10 @@ func remove_roar_cookies() -> void:
 	
 	update_roar_cookie_counter()
 	update_score()
+	
+	PhaseManager.current_state = 0
+	bet_phase_label.text = "Place your cookies!"
+	bet_phase_timer.start()
 
 func remove_claw_cookies() -> void:
 	claw_cookie_pot = []
@@ -131,6 +111,10 @@ func remove_claw_cookies() -> void:
 	
 	update_claw_cookie_counter()
 	update_score()
+	
+	PhaseManager.current_state = 0
+	bet_phase_label.text = "Place your cookies!"
+	bet_phase_timer.start()
 
 func remove_paw_cookies() -> void:
 	paw_cookie_pot = []
@@ -142,6 +126,10 @@ func remove_paw_cookies() -> void:
 	
 	update_roar_cookie_counter()
 	update_score()
+	
+	PhaseManager.current_state = 0
+	bet_phase_label.text = "Place your cookies!"
+	bet_phase_timer.start()
 
 func _on_paw_button_pressed() -> void:
 	player_choice = "paw"
