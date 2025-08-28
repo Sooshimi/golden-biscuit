@@ -10,7 +10,7 @@ func _ready() -> void:
 	linear_damp = 5.0
 
 func _on_area_2d_input_event(_viewport, _event, _shape_idx) -> void:
-	if Input.is_action_just_pressed("left_click") and not thrown:
+	if Input.is_action_just_pressed("left_click") and not thrown and PhaseManager.current_state == PhaseManager.Phase.BETTING_PHASE:
 		selected = true
 
 func _process(delta) -> void:

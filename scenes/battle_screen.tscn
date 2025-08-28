@@ -154,6 +154,25 @@ position = Vector2(315, 274)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/cookie_spawn_area"]
 shape = SubResource("CircleShape2D_jkca0")
 
+[node name="BetPhaseTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="BetPhaseLabel" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 406.0
+offset_top = 265.0
+offset_right = 554.0
+offset_bottom = 288.0
+text = "Place your cookies!"
+
+[node name="TimerLabel" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 407.0
+offset_top = 290.0
+offset_right = 447.0
+offset_bottom = 313.0
+
 [connection signal="body_entered" from="bet_area/PawArea" to="." method="_on_paw_area_body_entered"]
 [connection signal="body_exited" from="bet_area/PawArea" to="." method="_on_paw_area_body_exited"]
 [connection signal="body_entered" from="bet_area/ClawArea" to="." method="_on_claw_area_body_entered"]
@@ -165,3 +184,4 @@ shape = SubResource("CircleShape2D_jkca0")
 [connection signal="pressed" from="CanvasLayer/roar_button" to="." method="_on_roar_button_pressed"]
 [connection signal="body_entered" from="CanvasLayer/cookie_spawn_area" to="." method="_on_cookier_spawn_area_body_entered"]
 [connection signal="body_exited" from="CanvasLayer/cookie_spawn_area" to="." method="_on_cookier_spawn_area_body_exited"]
+[connection signal="timeout" from="BetPhaseTimer" to="." method="_on_bet_phase_timer_timeout"]
