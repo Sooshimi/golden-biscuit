@@ -11,11 +11,11 @@ var throw_velocity_reduce := 3
 var base_angle := 90.0 # Aim straight down
 var spread_angle := 70.0  # cone half-angle on either side
 var random_angle
-var speed := 100
-var min_cookie_throw_delay := 0.5
+var speed := 200
+var min_cookie_throw_delay := 0.2
 var max_cookie_throw_delay := 1.5
-var min_cookie_throw_distance := 0.5
-var max_cookie_throw_distance := 2.0
+var min_cookie_throw_distance := 0.1
+var max_cookie_throw_distance := 0.7
 
 func _ready() -> void:
 	linear_damp = 5.0
@@ -26,7 +26,7 @@ func _on_area_2d_input_event(_viewport, _event, _shape_idx) -> void:
 	if (Input.is_action_just_pressed("left_click") 
 	and not thrown 
 	and linear_velocity == Vector2.ZERO
-	and PhaseManager.current_state == PhaseManager.Phase.BETTING_PHASE
+	and PhaseManager.current_state == 0
 	and not self.is_in_group("enemy_cookie")):
 		selected = true
 
