@@ -37,6 +37,7 @@ movie_writer/fps=30
 
 folder_colors={
 "res://assets/": "teal",
+"res://audio/": "red",
 "res://scenes/": "orange",
 "res://scripts/": "purple"
 }
