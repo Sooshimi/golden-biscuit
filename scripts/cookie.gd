@@ -14,7 +14,7 @@ var random_angle
 var speed := 100
 var min_cookie_throw_delay := 0.5
 var max_cookie_throw_delay := 1.5
-var min_cookie_throw_distance := 1.0
+var min_cookie_throw_distance := 0.5
 var max_cookie_throw_distance := 2.0
 
 func _ready() -> void:
