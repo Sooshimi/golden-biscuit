@@ -10,7 +10,7 @@ extends Node2D
 @onready var paw_cookie_area := $bet_area/PawArea
 @onready var claw_cookie_area := $bet_area/ClawArea
 @onready var roar_cookie_area := $bet_area/RoarArea
-@onready var cookie_spawn_area := $CanvasLayer/cookie_spawn_area
+@onready var player_cookie_spawn_area := $CanvasLayer/PlayerCookieSpawnArea
 @onready var bet_phase_timer := $BetPhaseTimer
 @onready var timer_label := $TimerLabel
 @onready var bet_phase_label := $BetPhaseLabel
@@ -28,7 +28,7 @@ var cookie_holder_pot := []
 
 func _ready() -> void:
 	update_score()
-	spawn_cookie()
+	spawn_player_cookie()
 	print("Current Phase: ", PhaseManager.current_state)
 	bet_phase_timer.start()
 
@@ -38,9 +38,9 @@ func _process(delta) -> void:
 	if bet_phase_timer.time_left == 0:
 		timer_label.text = "Choose Paw, Claw, or Roar!"
 
-func spawn_cookie() -> void:
+func spawn_player_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
-	cookie.global_position = cookie_spawn_area.global_position
+	cookie.global_position = player_cookie_spawn_area.global_position
 	cookie.collision_mask = 0
 	add_child(cookie)
 
@@ -60,19 +60,19 @@ func battle() -> void:
 			print("draw")
 		elif player_choice == "roar" and enemy_choice == "paw":
 			if Global.total_cookies == 0:
-				spawn_cookie()
+				spawn_player_cookie()
 			print("player win")
 			Global.total_cookies += roar_cookie_pot.size()
 			remove_roar_cookies()
 		elif player_choice == "paw" and enemy_choice == "claw":
 			if Global.total_cookies == 0:
-				spawn_cookie()
+				spawn_player_cookie()
 			print("player win")
 			Global.total_cookies += paw_cookie_pot.size()
 			remove_paw_cookies()
 		elif player_choice == "claw" and enemy_choice == "roar":
 			if Global.total_cookies == 0:
-				spawn_cookie()
+				spawn_player_cookie()
 			print("player win")
 			Global.total_cookies += claw_cookie_pot.size()
 			remove_claw_cookies()
@@ -185,7 +185,7 @@ func update_claw_cookie_counter() -> void:
 func update_roar_cookie_counter() -> void:
 	roar_cookie_counter.text = str(roar_cookie_pot.size())
 
-func _on_cookier_spawn_area_body_exited(body: RigidBody2D) -> void:
+func _on_player_cookie_spawn_area_body_exited(body: RigidBody2D) -> void:
 	body.collision_mask = 1
 	cookie_holder_pot.remove_at(0)
 	
@@ -193,11 +193,11 @@ func _on_cookier_spawn_area_body_exited(body: RigidBody2D) -> void:
 		Global.total_cookies -= 1
 	
 	if Global.total_cookies > 0 and cookie_holder_pot.size() < 1:
-		spawn_cookie()
+		spawn_player_cookie()
 	
 	update_score()
 
-func _on_cookier_spawn_area_body_entered(body: RigidBody2D) -> void:
+func _on_player_cookie_spawn_area_body_entered(body: RigidBody2D) -> void:
 	cookie_holder_pot.append(body)
 
 func _on_bet_phase_timer_timeout():
