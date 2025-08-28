@@ -1,16 +1,17 @@
 extends Node2D
 
-@onready var paw_button := $CanvasLayer/paw_button
-@onready var claw_button := $CanvasLayer/claw_button
-@onready var roar_button := $CanvasLayer/roar_button
-@onready var cookie_counter := $CanvasLayer/cookie_counter
-@onready var paw_cookie_counter := $CanvasLayer/paw_cookie_counter
-@onready var claw_cookie_counter := $CanvasLayer/claw_cookie_counter
-@onready var roar_cookie_counter := $CanvasLayer/roar_cookie_counter
+@onready var paw_button := $CanvasLayer/PawButton
+@onready var claw_button := $CanvasLayer/ClawButton
+@onready var roar_button := $CanvasLayer/RoarButton
+@onready var player_cookie_counter := $CanvasLayer/CookieCounter
+@onready var paw_cookie_counter := $CanvasLayer/PawCookieCounter
+@onready var claw_cookie_counter := $CanvasLayer/ClawCookieCounter
+@onready var roar_cookie_counter := $CanvasLayer/RoarCookieCounter
 @onready var paw_cookie_area := $bet_area/PawArea
 @onready var claw_cookie_area := $bet_area/ClawArea
 @onready var roar_cookie_area := $bet_area/RoarArea
 @onready var player_cookie_spawn_area := $CanvasLayer/PlayerCookieSpawnArea
+@onready var enemy_cookie_spawn_area := $CanvasLayer/EnemyCookieSpawnArea
 @onready var bet_phase_timer := $BetPhaseTimer
 @onready var timer_label := $TimerLabel
 @onready var bet_phase_label := $BetPhaseLabel
@@ -44,8 +45,14 @@ func spawn_player_cookie() -> void:
 	cookie.collision_mask = 0
 	add_child(cookie)
 
+func spawn_enemy_cookie() -> void:
+	var cookie = cookie_scene.instantiate()
+	cookie.global_position = enemy_cookie_spawn_area.global_position
+	cookie.collision_mask = 0
+	add_child(cookie)
+
 func update_score() -> void:
-	cookie_counter.text = str(Global.total_cookies)
+	player_cookie_counter.text = str(Global.total_cookies)
 
 func enemy_turn() -> String:
 	enemy_choice = choices[randi() % choices.size()]
