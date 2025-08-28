@@ -4,6 +4,7 @@ extends Node2D
 @onready var claw_button := $CanvasLayer/ClawButton
 @onready var roar_button := $CanvasLayer/RoarButton
 @onready var player_cookie_counter := $CanvasLayer/PlayerCookieCounter
+@onready var enemy_cookie_counter := $CanvasLayer/EnemyCookieCounter
 @onready var paw_cookie_counter := $CanvasLayer/PawCookieCounter
 @onready var claw_cookie_counter := $CanvasLayer/ClawCookieCounter
 @onready var roar_cookie_counter := $CanvasLayer/RoarCookieCounter
@@ -15,6 +16,9 @@ extends Node2D
 @onready var bet_phase_timer := $BetPhaseTimer
 @onready var timer_label := $TimerLabel
 @onready var bet_phase_label := $BetPhaseLabel
+@onready var player_result_label := $CanvasLayer/PlayerResultLabel
+@onready var enemy_result_label := $CanvasLayer/EnemyResultLabel
+@onready var result_timer := $ResultTimer
 
 var cookie_scene: PackedScene = preload("res://scenes/cookie.tscn")
 
@@ -25,11 +29,13 @@ const choices := ["paw", "claw", "roar"]
 var paw_cookie_pot := []
 var claw_cookie_pot := []
 var roar_cookie_pot := []
-var cookie_holder_pot := []
+var player_cookie_holder_pot := []
+var enemy_cookie_holder_pot := []
 
 func _ready() -> void:
 	update_score()
 	spawn_player_cookie()
+	spawn_enemy_cookie()
 	print("Current Phase: ", PhaseManager.current_state)
 	bet_phase_timer.start()
 
@@ -38,6 +44,9 @@ func _process(delta) -> void:
 	
 	if bet_phase_timer.time_left == 0:
 		timer_label.text = "Choose Paw, Claw, or Roar!"
+	
+	if PhaseManager.current_state == 2:
+		timer_label.text = ""
 
 func spawn_player_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
@@ -52,7 +61,8 @@ func spawn_enemy_cookie() -> void:
 	add_child(cookie)
 
 func update_score() -> void:
-	player_cookie_counter.text = str(Global.total_cookies)
+	player_cookie_counter.text = str(Global.player_total_cookies)
+	enemy_cookie_counter.text = str(Global.enemy_total_cookies)
 
 func enemy_turn() -> String:
 	enemy_choice = choices[randi() % choices.size()]
@@ -64,34 +74,61 @@ func battle() -> void:
 		print("enemy_chooses: ", enemy_choice)
 		
 		if player_choice == enemy_choice:
-			print("draw")
+			player_result_label.text = "Draw!"
+			enemy_result_label.text = "Draw!"
 		elif player_choice == "roar" and enemy_choice == "paw":
-			if Global.total_cookies == 0:
+			if Global.player_total_cookies == 0:
 				spawn_player_cookie()
-			print("player win")
-			Global.total_cookies += roar_cookie_pot.size()
+			player_result_label.text = "Win!"
+			enemy_result_label.text = "Lose!"
+			Global.player_total_cookies += roar_cookie_pot.size()
 			remove_roar_cookies()
+			start_result_phase()
 		elif player_choice == "paw" and enemy_choice == "claw":
-			if Global.total_cookies == 0:
+			if Global.player_total_cookies == 0:
 				spawn_player_cookie()
-			print("player win")
-			Global.total_cookies += paw_cookie_pot.size()
+			player_result_label.text = "Win!"
+			enemy_result_label.text = "Lose!"
+			Global.player_total_cookies += paw_cookie_pot.size()
 			remove_paw_cookies()
+			start_result_phase()
 		elif player_choice == "claw" and enemy_choice == "roar":
-			if Global.total_cookies == 0:
+			if Global.player_total_cookies == 0:
 				spawn_player_cookie()
-			print("player win")
-			Global.total_cookies += claw_cookie_pot.size()
+			player_result_label.text = "Win!"
+			enemy_result_label.text = "Lose!"
+			Global.player_total_cookies += claw_cookie_pot.size()
 			remove_claw_cookies()
+			start_result_phase()
 		elif enemy_choice == "roar" and player_choice == "paw":
-			print("player lose")
+			if Global.enemy_total_cookies == 0:
+				spawn_enemy_cookie()
+			player_result_label.text = "Lose!"
+			enemy_result_label.text = "Win!"
+			Global.enemy_total_cookies += roar_cookie_pot.size()
 			remove_roar_cookies()
+			start_result_phase()
 		elif enemy_choice == "paw" and player_choice == "claw":
-			print("player lose")
+			if Global.enemy_total_cookies == 0:
+				spawn_enemy_cookie()
+			player_result_label.text = "Lose!"
+			enemy_result_label.text = "Win!"
+			Global.enemy_total_cookies += paw_cookie_pot.size()
 			remove_paw_cookies()
+			start_result_phase()
 		elif enemy_choice == "claw" and player_choice == "roar":
-			print("player lose")
+			if Global.enemy_total_cookies == 0:
+				spawn_enemy_cookie()
+			player_result_label.text = "Lose!"
+			enemy_result_label.text = "Win!"
+			Global.enemy_total_cookies += claw_cookie_pot.size()
 			remove_claw_cookies()
+			start_result_phase()
+
+func start_result_phase() -> void:
+	PhaseManager.current_state = 2
+	print("Current Phase: ", PhaseManager.current_state, " - result phase starts")
+	result_timer.start()
 
 func remove_roar_cookies() -> void:
 	roar_cookie_pot = []
@@ -103,10 +140,6 @@ func remove_roar_cookies() -> void:
 	
 	update_roar_cookie_counter()
 	update_score()
-	
-	PhaseManager.current_state = 0
-	bet_phase_label.text = "Place your cookies!"
-	bet_phase_timer.start()
 
 func remove_claw_cookies() -> void:
 	claw_cookie_pot = []
@@ -118,10 +151,6 @@ func remove_claw_cookies() -> void:
 	
 	update_claw_cookie_counter()
 	update_score()
-	
-	PhaseManager.current_state = 0
-	bet_phase_label.text = "Place your cookies!"
-	bet_phase_timer.start()
 
 func remove_paw_cookies() -> void:
 	paw_cookie_pot = []
@@ -133,22 +162,21 @@ func remove_paw_cookies() -> void:
 	
 	update_roar_cookie_counter()
 	update_score()
-	
-	PhaseManager.current_state = 0
-	bet_phase_label.text = "Place your cookies!"
-	bet_phase_timer.start()
 
 func _on_paw_button_pressed() -> void:
-	player_choice = "paw"
-	battle()
+	if PhaseManager.current_state == 1:
+		player_choice = "paw"
+		battle()
 
 func _on_claw_button_pressed() -> void:
-	player_choice = "claw"
-	battle()
+	if PhaseManager.current_state == 1:
+		player_choice = "claw"
+		battle()
 
 func _on_roar_button_pressed() -> void:
-	player_choice = "roar"
-	battle()
+	if PhaseManager.current_state == 1:
+		player_choice = "roar"
+		battle()
 
 # COOKIES ENTERS PAW AREA
 func _on_paw_area_body_entered(body: RigidBody2D) -> void:
@@ -194,20 +222,43 @@ func update_roar_cookie_counter() -> void:
 
 func _on_player_cookie_spawn_area_body_exited(body: RigidBody2D) -> void:
 	body.collision_mask = 1
-	cookie_holder_pot.remove_at(0)
+	player_cookie_holder_pot.remove_at(0)
 	
-	if cookie_holder_pot.size() < 1:
-		Global.total_cookies -= 1
+	if player_cookie_holder_pot.size() < 1:
+		Global.player_total_cookies -= 1
 	
-	if Global.total_cookies > 0 and cookie_holder_pot.size() < 1:
+	if Global.player_total_cookies > 0 and player_cookie_holder_pot.size() < 1:
 		spawn_player_cookie()
 	
 	update_score()
 
 func _on_player_cookie_spawn_area_body_entered(body: RigidBody2D) -> void:
-	cookie_holder_pot.append(body)
+	player_cookie_holder_pot.append(body)
 
-func _on_bet_phase_timer_timeout():
+func _on_enemy_cookie_spawn_area_body_exited(body: RigidBody2D) -> void:
+	body.collision_mask = 1
+	enemy_cookie_holder_pot.remove_at(0)
+	
+	if enemy_cookie_holder_pot.size() < 1:
+		Global.enemy_total_cookies -= 1
+	
+	if Global.enemy_total_cookies > 0 and enemy_cookie_holder_pot.size() < 1:
+		spawn_enemy_cookie()
+	
+	update_score()
+
+func _on_enemy_cookie_spawn_area_body_entered(body: RigidBody2D) -> void:
+	enemy_cookie_holder_pot.append(body)
+
+func _on_bet_phase_timer_timeout() -> void:
 	PhaseManager.current_state = 1
 	bet_phase_label.text = ""
-	print("Current Phase: ", PhaseManager.current_state)
+	print("Current Phase: ", PhaseManager.current_state, " - bet timer time out")
+
+func _on_result_timer_timeout():
+	PhaseManager.current_state = 0
+	print("Current Phase: ", PhaseManager.current_state, " - result timer time out")
+	player_result_label.text = ""
+	enemy_result_label.text = ""
+	bet_phase_label.text = "Place your cookies!"
+	bet_phase_timer.start()

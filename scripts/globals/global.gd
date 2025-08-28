@@ -1,3 +1,4 @@
 extends Node
 
-var total_cookies := 10
+var player_total_cookies := 20
+var enemy_total_cookies := 20

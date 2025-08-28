@@ -121,6 +121,15 @@ offset_bottom = 306.0
 text = "0"
 horizontal_alignment = 1
 
+[node name="EnemyCookieCounter" type="Label" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 331.0
+offset_top = 31.0
+offset_right = 382.0
+offset_bottom = 56.0
+text = "0"
+horizontal_alignment = 1
+
 [node name="PawCookieCounter" type="Label" parent="CanvasLayer"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 165.0
@@ -148,6 +157,18 @@ offset_bottom = 245.0
 text = "0"
 horizontal_alignment = 1
 
+[node name="PlayerResultLabel" type="Label" parent="CanvasLayer"]
+offset_left = 226.0
+offset_top = 266.0
+offset_right = 266.0
+offset_bottom = 289.0
+
+[node name="EnemyResultLabel" type="Label" parent="CanvasLayer"]
+offset_left = 230.0
+offset_top = 44.0
+offset_right = 270.0
+offset_bottom = 67.0
+
 [node name="PlayerCookieSpawnArea" type="Area2D" parent="CanvasLayer"]
 position = Vector2(315, 274)
 
@@ -161,7 +182,7 @@ position = Vector2(313, 57)
 shape = SubResource("CircleShape2D_jkca0")
 
 [node name="BetPhaseTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 7.0
 one_shot = true
 
 [node name="BetPhaseLabel" type="Label" parent="."]
@@ -179,6 +200,10 @@ offset_top = 290.0
 offset_right = 447.0
 offset_bottom = 313.0
 
+[node name="ResultTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="body_entered" from="bet_area/PawArea" to="." method="_on_paw_area_body_entered"]
 [connection signal="body_exited" from="bet_area/PawArea" to="." method="_on_paw_area_body_exited"]
 [connection signal="body_entered" from="bet_area/ClawArea" to="." method="_on_claw_area_body_entered"]
@@ -190,6 +215,7 @@ offset_bottom = 313.0
 [connection signal="pressed" from="CanvasLayer/Roarbutton" to="." method="_on_roar_button_pressed"]
 [connection signal="body_entered" from="CanvasLayer/PlayerCookieSpawnArea" to="." method="_on_player_cookie_spawn_area_body_entered"]
 [connection signal="body_exited" from="CanvasLayer/PlayerCookieSpawnArea" to="." method="_on_player_cookie_spawn_area_body_exited"]
-[connection signal="body_entered" from="CanvasLayer/EnemyCookieSpawnArea" to="." method="_on_cookier_spawn_area_body_entered"]
-[connection signal="body_exited" from="CanvasLayer/EnemyCookieSpawnArea" to="." method="_on_cookier_spawn_area_body_exited"]
+[connection signal="body_entered" from="CanvasLayer/EnemyCookieSpawnArea" to="." method="_on_enemy_cookie_spawn_area_body_entered"]
+[connection signal="body_exited" from="CanvasLayer/EnemyCookieSpawnArea" to="." method="_on_enemy_cookie_spawn_area_body_exited"]
 [connection signal="timeout" from="BetPhaseTimer" to="." method="_on_bet_phase_timer_timeout"]
+[connection signal="timeout" from="ResultTimer" to="." method="_on_result_timer_timeout"]
