@@ -55,10 +55,11 @@ func spawn_player_cookie() -> void:
 	add_child(cookie)
 
 func spawn_enemy_cookie() -> void:
-	var cookie = cookie_scene.instantiate()
-	cookie.global_position = enemy_cookie_spawn_area.global_position
-	cookie.collision_mask = 0
-	add_child(cookie)
+	if PhaseManager.current_state == 0:
+		var cookie = cookie_scene.instantiate()
+		cookie.global_position = enemy_cookie_spawn_area.global_position
+		cookie.collision_mask = 0
+		add_child(cookie)
 
 func update_score() -> void:
 	player_cookie_counter.text = str(Global.player_total_cookies)
@@ -249,6 +250,7 @@ func _on_enemy_cookie_spawn_area_body_exited(body: RigidBody2D) -> void:
 
 func _on_enemy_cookie_spawn_area_body_entered(body: RigidBody2D) -> void:
 	enemy_cookie_holder_pot.append(body)
+	body.add_to_group("enemy_cookie")
 
 func _on_bet_phase_timer_timeout() -> void:
 	PhaseManager.current_state = 1
@@ -262,3 +264,4 @@ func _on_result_timer_timeout():
 	enemy_result_label.text = ""
 	bet_phase_label.text = "Place your cookies!"
 	bet_phase_timer.start()
+	spawn_enemy_cookie()

@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_i5c4t"]
 radius = 11.0
 
-[node name="Cookie" type="RigidBody2D" groups=["cookies"]]
+[node name="Cookie" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_yys3m")
 
@@ -22,4 +22,12 @@ shape = SubResource("CircleShape2D_i5c4t")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_i5c4t")
 
+[node name="CookieThrowDelayTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CookieThrowDistanceTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="timeout" from="CookieThrowDelayTimer" to="." method="_on_cookie_throw_delay_timer_timeout"]
+[connection signal="timeout" from="CookieThrowDistanceTimer" to="." method="_on_cookie_throw_distance_timer_timeout"]
