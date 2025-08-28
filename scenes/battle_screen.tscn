@@ -112,7 +112,7 @@ offset_top = 308.0
 offset_right = 384.0
 offset_bottom = 343.0
 
-[node name="CookieCounter" type="Label" parent="CanvasLayer"]
+[node name="PlayerCookieCounter" type="Label" parent="CanvasLayer"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 329.0
 offset_top = 281.0

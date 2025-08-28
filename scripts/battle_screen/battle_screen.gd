@@ -3,7 +3,7 @@ extends Node2D
 @onready var paw_button := $CanvasLayer/PawButton
 @onready var claw_button := $CanvasLayer/ClawButton
 @onready var roar_button := $CanvasLayer/RoarButton
-@onready var player_cookie_counter := $CanvasLayer/CookieCounter
+@onready var player_cookie_counter := $CanvasLayer/PlayerCookieCounter
 @onready var paw_cookie_counter := $CanvasLayer/PawCookieCounter
 @onready var claw_cookie_counter := $CanvasLayer/ClawCookieCounter
 @onready var roar_cookie_counter := $CanvasLayer/RoarCookieCounter
