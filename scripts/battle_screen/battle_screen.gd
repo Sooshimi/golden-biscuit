@@ -26,11 +26,6 @@ func _ready() -> void:
 	update_score()
 	spawn_cookie()
 
-func _process(_delta) -> void:
-	update_paw_cookie_counter()
-	update_claw_cookie_counter()
-	update_roar_cookie_counter()
-
 func spawn_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
 	cookie.global_position = Vector2(315,274)
@@ -81,6 +76,8 @@ func remove_roar_cookies() -> void:
 	for body in roar_cookie_area.get_overlapping_bodies():
 		body.queue_free()
 		roar_cookie_area.get_overlapping_bodies().erase(0)
+	
+	update_roar_cookie_counter()
 
 func remove_claw_cookies() -> void:
 	claw_cookie_pot = []
@@ -89,6 +86,8 @@ func remove_claw_cookies() -> void:
 	for body in claw_cookie_area.get_overlapping_bodies():
 		body.queue_free()
 		claw_cookie_area.get_overlapping_bodies().erase(0)
+	
+	update_claw_cookie_counter()
 
 func remove_paw_cookies() -> void:
 	paw_cookie_pot = []
@@ -97,6 +96,8 @@ func remove_paw_cookies() -> void:
 	for body in paw_cookie_area.get_overlapping_bodies():
 		body.queue_free()
 		paw_cookie_area.get_overlapping_bodies().erase(0)
+	
+	update_roar_cookie_counter()
 
 func _on_paw_button_pressed() -> void:
 	player_choice = "paw"
@@ -113,29 +114,35 @@ func _on_roar_button_pressed() -> void:
 # COOKIES ENTERS PAW AREA
 func _on_paw_area_body_entered(body: RigidBody2D) -> void:
 	paw_cookie_pot.append(body)
+	update_paw_cookie_counter()
 
 # COOKIES EXITS PAW AREA
 func _on_paw_area_body_exited(body: RigidBody2D) -> void:
 	if paw_cookie_pot.size() > 0:
 		paw_cookie_pot.remove_at(0)
+	update_paw_cookie_counter()
 
 # COOKIES ENTERS CLAW AREA
 func _on_claw_area_body_entered(body: RigidBody2D) -> void:
 	claw_cookie_pot.append(body)
+	update_claw_cookie_counter()
 
 # COOKIES EXITS CLAW AREA
 func _on_claw_area_body_exited(body: RigidBody2D) -> void:
 	if claw_cookie_pot.size() > 0:
 		claw_cookie_pot.remove_at(0)
+	update_claw_cookie_counter()
 
 # COOKIES ENTERS ROAR AREA
 func _on_roar_area_body_entered(body: RigidBody2D) -> void:
 	roar_cookie_pot.append(body)
+	update_roar_cookie_counter()
 
 # COOKIES EXITS ROAR AREA
 func _on_roar_area_body_exited(body: RigidBody2D) -> void:
 	if roar_cookie_pot.size() > 0:
 		roar_cookie_pot.remove_at(0)
+	update_roar_cookie_counter()
 
 func update_paw_cookie_counter() -> void:
 	paw_cookie_counter.text = str(paw_cookie_pot.size())
