@@ -16,7 +16,7 @@ var cookie_scene: PackedScene = preload("res://scenes/cookie.tscn")
 
 var enemy_choice := ""
 var player_choice := ""
-var choices := ["paw", "claw", "roar"]
+const choices := ["paw", "claw", "roar"]
 
 var paw_cookie_pot := []
 var claw_cookie_pot := []
