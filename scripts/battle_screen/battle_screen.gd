@@ -10,6 +10,7 @@ extends Node2D
 @onready var paw_cookie_area := $bet_area/PawArea
 @onready var claw_cookie_area := $bet_area/ClawArea
 @onready var roar_cookie_area := $bet_area/RoarArea
+@onready var cookie_spawn_area := $CanvasLayer/cookie_spawn_area
 
 var cookie_scene: PackedScene = preload("res://scenes/cookie.tscn")
 
@@ -28,7 +29,7 @@ func _ready() -> void:
 
 func spawn_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
-	cookie.global_position = Vector2(315,274)
+	cookie.global_position = cookie_spawn_area.global_position
 	cookie.collision_mask = 0
 	add_child(cookie)
 

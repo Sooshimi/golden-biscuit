@@ -148,10 +148,10 @@ offset_bottom = 245.0
 text = "0"
 horizontal_alignment = 1
 
-[node name="cookier_spawn_area" type="Area2D" parent="CanvasLayer"]
+[node name="cookie_spawn_area" type="Area2D" parent="CanvasLayer"]
 position = Vector2(315, 274)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/cookier_spawn_area"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/cookie_spawn_area"]
 shape = SubResource("CircleShape2D_jkca0")
 
 [connection signal="body_entered" from="bet_area/PawArea" to="." method="_on_paw_area_body_entered"]
@@ -163,5 +163,5 @@ shape = SubResource("CircleShape2D_jkca0")
 [connection signal="pressed" from="CanvasLayer/paw_button" to="." method="_on_paw_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/claw_button" to="." method="_on_claw_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/roar_button" to="." method="_on_roar_button_pressed"]
-[connection signal="body_entered" from="CanvasLayer/cookier_spawn_area" to="." method="_on_cookier_spawn_area_body_entered"]
-[connection signal="body_exited" from="CanvasLayer/cookier_spawn_area" to="." method="_on_cookier_spawn_area_body_exited"]
+[connection signal="body_entered" from="CanvasLayer/cookie_spawn_area" to="." method="_on_cookier_spawn_area_body_entered"]
+[connection signal="body_exited" from="CanvasLayer/cookie_spawn_area" to="." method="_on_cookier_spawn_area_body_exited"]
