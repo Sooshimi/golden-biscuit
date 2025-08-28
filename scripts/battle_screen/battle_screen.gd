@@ -47,14 +47,20 @@ func battle() -> void:
 	if player_choice == enemy_choice:
 		print("draw")
 	elif player_choice == "roar" and enemy_choice == "paw":
+		if Global.total_cookies == 0:
+			spawn_cookie()
 		print("player win")
 		Global.total_cookies += roar_cookie_pot.size()
 		remove_roar_cookies()
 	elif player_choice == "paw" and enemy_choice == "claw":
+		if Global.total_cookies == 0:
+			spawn_cookie()
 		print("player win")
 		Global.total_cookies += paw_cookie_pot.size()
 		remove_paw_cookies()
 	elif player_choice == "claw" and enemy_choice == "roar":
+		if Global.total_cookies == 0:
+			spawn_cookie()
 		print("player win")
 		Global.total_cookies += claw_cookie_pot.size()
 		remove_claw_cookies()
@@ -67,8 +73,6 @@ func battle() -> void:
 	elif enemy_choice == "claw" and player_choice == "roar":
 		print("player lose")
 		remove_claw_cookies()
-	
-	update_score()
 
 func remove_roar_cookies() -> void:
 	roar_cookie_pot = []
@@ -79,6 +83,7 @@ func remove_roar_cookies() -> void:
 		roar_cookie_area.get_overlapping_bodies().erase(0)
 	
 	update_roar_cookie_counter()
+	update_score()
 
 func remove_claw_cookies() -> void:
 	claw_cookie_pot = []
@@ -89,6 +94,7 @@ func remove_claw_cookies() -> void:
 		claw_cookie_area.get_overlapping_bodies().erase(0)
 	
 	update_claw_cookie_counter()
+	update_score()
 
 func remove_paw_cookies() -> void:
 	paw_cookie_pot = []
@@ -99,6 +105,7 @@ func remove_paw_cookies() -> void:
 		paw_cookie_area.get_overlapping_bodies().erase(0)
 	
 	update_roar_cookie_counter()
+	update_score()
 
 func _on_paw_button_pressed() -> void:
 	player_choice = "paw"
