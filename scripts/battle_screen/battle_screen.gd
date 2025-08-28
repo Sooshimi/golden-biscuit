@@ -27,14 +27,9 @@ func _ready() -> void:
 	spawn_cookie()
 
 func _process(_delta) -> void:
-	if paw_cookie_pot.size() > 0:
-		update_paw_cookie_counter()
-	
-	if claw_cookie_pot.size() > 0:
-		update_claw_cookie_counter()
-	
-	if roar_cookie_pot.size() > 0:
-		update_roar_cookie_counter()
+	update_paw_cookie_counter()
+	update_claw_cookie_counter()
+	update_roar_cookie_counter()
 
 func spawn_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
