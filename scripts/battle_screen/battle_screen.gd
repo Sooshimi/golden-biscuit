@@ -46,6 +46,7 @@ var start_game_button_pressed := false
 
 func _ready() -> void:
 	camera.global_position = menu_camera_global_position
+	update_score()
 	ui.hide()
 	bet_area.hide()
 	$MainMenuMusic.play()
