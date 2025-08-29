@@ -4,6 +4,8 @@ extends Node2D
 @onready var ui := $UI
 @onready var menu := $Menu
 @onready var menu_transition_timer := $MenuTransitionTimer
+@onready var game_over := $GameOver
+
 @onready var bet_area := $BetArea
 @onready var paw_button := $UI/PawButton
 @onready var claw_button := $UI/ClawButton
@@ -163,6 +165,7 @@ func start_result_phase() -> void:
 		if Global.player_total_cookies == 0 or Global.enemy_total_cookies == 0:
 			print("GAME OVER")
 			PhaseManager.current_state = 3
+			game_over.show()
 		else:
 			result_timer.start()
 
@@ -300,3 +303,6 @@ func _on_result_timer_timeout() -> void:
 	bet_phase_label.text = "Place your cookies!"
 	bet_phase_timer.start()
 	spawn_enemy_cookie()
+
+func _on_play_again_button_pressed():
+	get_tree().reload_current_scene()
