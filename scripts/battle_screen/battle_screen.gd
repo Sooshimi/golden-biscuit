@@ -44,6 +44,7 @@ var enemy_cookie_holder_pot := []
 var start_game_button_pressed := false
 
 func _ready() -> void:
+	Global.game_start = false
 	update_score()
 	bet_area.hide()
 	$MainMenuMusic.play()
