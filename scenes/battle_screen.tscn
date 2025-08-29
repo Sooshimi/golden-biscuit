@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="Texture2D" uid="uid://duofnf5orc3hp" path="res://assets/arena_floor_background.png" id="2_jkca0"]
-[ext_resource type="AudioStream" uid="uid://b311aofscatbd" path="res://audio/Music/main_menu.mp3" id="2_y5my5"]
+[ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
 [ext_resource type="AudioStream" uid="uid://da5ea5n085l6m" path="res://audio/SFX/Atmosphere/atmos_background.mp3" id="3_6lb5u"]
 [ext_resource type="AudioStream" uid="uid://b228jitbdrhh5" path="res://audio/SFX/stings/enter_ring_start_game.mp3" id="4_jwmpd"]
 
@@ -16,7 +16,8 @@ radius = 21.0
 script = ExtResource("1_jkca0")
 
 [node name="MainMenuMusic" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_y5my5")
+stream = ExtResource("2_jwmpd")
+parameters/looping = true
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_6lb5u")
