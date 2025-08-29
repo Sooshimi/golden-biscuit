@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://fc4yacs1tuot"]
+[gd_scene load_steps=5 format=3 uid="uid://fc4yacs1tuot"]
 
 [ext_resource type="Texture2D" uid="uid://ccxjrnt2xthw4" path="res://assets/donut.png" id="1_i5c4t"]
 [ext_resource type="Script" uid="uid://eff2113j5yd6" path="res://scripts/cookie.gd" id="1_yys3m"]
+[ext_resource type="AudioStream" uid="uid://bfkqa0cecxndi" path="res://audio/SFX/objects/bisc_throw.mp3" id="3_2rrt0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i5c4t"]
 radius = 11.0
@@ -27,6 +28,9 @@ one_shot = true
 
 [node name="CookieThrowDistanceTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="BiscuitThrowAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2rrt0")
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="timeout" from="CookieThrowDelayTimer" to="." method="_on_cookie_throw_delay_timer_timeout"]

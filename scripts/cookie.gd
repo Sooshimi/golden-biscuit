@@ -2,6 +2,7 @@ extends RigidBody2D
 
 @onready var cookie_throw_distance_timer := $CookieThrowDistanceTimer
 @onready var cookie_throw_delay_timer := $CookieThrowDelayTimer
+@onready var biscuit_throw_audio := $BiscuitThrowAudio
 
 var follow_speed := 25
 var selected := false
@@ -37,6 +38,7 @@ func _process(delta) -> void:
 	
 	if not selected and linear_velocity.length() < 1:
 		linear_velocity = Vector2.ZERO
+		biscuit_throw_audio.play()
 	
 	if self.is_in_group("enemy_cookie") and cookie_throw_delay_timer.is_stopped():
 		linear_velocity = Vector2.RIGHT.rotated(random_angle) * speed

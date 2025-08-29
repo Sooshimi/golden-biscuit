@@ -60,6 +60,9 @@ func _process(delta) -> void:
 	
 	if start_game_button_pressed:
 		camera_zoom(delta)
+		$MainMenuMusic.volume_db -= 0.05
+		if $BackgroundMusic.volume_db <= 1.0:
+			$BackgroundMusic.volume_db += 0.1
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
@@ -67,6 +70,8 @@ func _on_start_game_button_pressed() -> void:
 	ui.show()
 	bet_area.show()
 	menu.hide()
+	$BackgroundMusic.volume_db = 0.0
+	$BackgroundMusic.play()
 
 func _on_menu_transition_timer_timeout():
 	Global.game_start = true
