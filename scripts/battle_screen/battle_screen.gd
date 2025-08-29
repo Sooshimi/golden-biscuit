@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var camera := $Camera2D
 @onready var paw_button := $CanvasLayer/PawButton
 @onready var claw_button := $CanvasLayer/ClawButton
 @onready var roar_button := $CanvasLayer/RoarButton
@@ -33,6 +34,7 @@ var player_cookie_holder_pot := []
 var enemy_cookie_holder_pot := []
 
 func _ready() -> void:
+	camera.global_position = Vector2(130, 60)
 	update_score()
 	spawn_player_cookie()
 	spawn_enemy_cookie()
@@ -47,6 +49,13 @@ func _process(delta) -> void:
 	
 	if PhaseManager.current_state == 2:
 		timer_label.text = ""
+	
+	camera_zoom(delta)
+
+func camera_zoom(delta) -> void:
+	camera.zoom.x = lerp(camera.zoom.x, 1.0, delta * 2)
+	camera.zoom.y = lerp(camera.zoom.y, 1.0, delta * 2)
+	camera.global_position = lerp(camera.global_position, Vector2.ZERO, delta * 2)
 
 func spawn_player_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
