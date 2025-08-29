@@ -1,27 +1,30 @@
 [gd_scene load_steps=5 format=3 uid="uid://fc4yacs1tuot"]
 
-[ext_resource type="Texture2D" uid="uid://ccxjrnt2xthw4" path="res://assets/donut.png" id="1_i5c4t"]
 [ext_resource type="Script" uid="uid://eff2113j5yd6" path="res://scripts/cookie.gd" id="1_yys3m"]
+[ext_resource type="Texture2D" uid="uid://bu11ua8ubdb2b" path="res://assets/biscuit_1.png" id="2_2rrt0"]
 [ext_resource type="AudioStream" uid="uid://bfkqa0cecxndi" path="res://audio/SFX/objects/bisc_throw.mp3" id="3_2rrt0"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_i5c4t"]
-radius = 11.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_on5vl"]
+radius = 8.0
+height = 22.0
 
 [node name="Cookie" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_yys3m")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.08, 0.08)
-texture = ExtResource("1_i5c4t")
+scale = Vector2(1.335, 1.335)
+texture = ExtResource("2_2rrt0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_i5c4t")
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_on5vl")
 
 [node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_i5c4t")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_on5vl")
 
 [node name="CookieThrowDelayTimer" type="Timer" parent="."]
 one_shot = true

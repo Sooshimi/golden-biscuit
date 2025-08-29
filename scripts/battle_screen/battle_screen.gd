@@ -51,7 +51,7 @@ func _ready() -> void:
 	$MainMenuMusic.play()
 
 func _process(delta) -> void:
-	timer_label.text = str(int(bet_phase_timer.time_left))
+	timer_label.text = str(int(bet_phase_timer.time_left + 1))
 	
 	if bet_phase_timer.time_left == 0:
 		timer_label.text = "Choose Paw, Claw, or Roar!"
