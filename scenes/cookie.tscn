@@ -31,6 +31,8 @@ one_shot = true
 
 [node name="BiscuitThrowAudio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_2rrt0")
+volume_db = -4.0
+pitch_scale = 0.9
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="timeout" from="CookieThrowDelayTimer" to="." method="_on_cookie_throw_delay_timer_timeout"]

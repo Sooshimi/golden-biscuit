@@ -61,7 +61,7 @@ func _process(delta) -> void:
 	if start_game_button_pressed:
 		camera_zoom(delta)
 		$MainMenuMusic.volume_db -= 0.05
-		if $BackgroundMusic.volume_db <= 1.0:
+		if $BackgroundMusic.volume_db <= 0.9:
 			$BackgroundMusic.volume_db += 0.1
 
 func _on_start_game_button_pressed() -> void:
