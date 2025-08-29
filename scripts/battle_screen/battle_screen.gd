@@ -66,7 +66,6 @@ func _on_start_game_button_pressed() -> void:
 
 func _on_menu_transition_timer_timeout():
 	Global.game_start = true
-	update_score()
 	spawn_player_cookie()
 	spawn_enemy_cookie()
 	print("Current Phase: ", PhaseManager.current_state)
@@ -158,7 +157,14 @@ func battle() -> void:
 func start_result_phase() -> void:
 	PhaseManager.current_state = 2
 	print("Current Phase: ", PhaseManager.current_state, " - result phase starts")
-	result_timer.start()
+	
+	# GAME OVER
+	if PhaseManager.current_state == 2:
+		if Global.player_total_cookies == 0 or Global.enemy_total_cookies == 0:
+			print("GAME OVER")
+			PhaseManager.current_state = 3
+		else:
+			result_timer.start()
 
 func remove_roar_cookies() -> void:
 	roar_cookie_pot = []
