@@ -47,7 +47,6 @@ func _input(event) -> void:
 	if event is InputEventMouseButton:
 		if selected and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 			selected = false
-			thrown = true
 			
 			linear_velocity = throw_velocity / throw_velocity_reduce
 
