@@ -41,35 +41,28 @@ var roar_cookie_pot := []
 var player_cookie_holder_pot := []
 var enemy_cookie_holder_pot := []
 
-var menu_camera_global_position := Vector2(130, 60)
 var start_game_button_pressed := false
 
 func _ready() -> void:
-	camera.global_position = menu_camera_global_position
 	update_score()
-	ui.hide()
 	bet_area.hide()
 	$MainMenuMusic.play()
 
 func _process(delta) -> void:
-	timer_label.text = str(int(bet_phase_timer.time_left + 1))
-	
-	if bet_phase_timer.time_left == 0:
-		timer_label.text = "Choose Paw, Claw, or Roar!"
-	
-	if PhaseManager.current_state == 2:
+	if bet_phase_timer.time_left > 0:
+		timer_label.text = str(int(bet_phase_timer.time_left + 1))
+	else:
 		timer_label.text = ""
 	
 	if start_game_button_pressed:
 		camera_zoom(delta)
 		$MainMenuMusic.volume_db -= 0.05
-		if $BackgroundMusic.volume_db <= 0.5:
+		if $BackgroundMusic.volume_db <= 0.0:
 			$BackgroundMusic.volume_db += 0.1
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
 	menu_transition_timer.start()
-	ui.show()
 	bet_area.show()
 	menu.hide()
 	$BackgroundMusic.volume_db = 0.0
@@ -78,16 +71,17 @@ func _on_start_game_button_pressed() -> void:
 
 func _on_menu_transition_timer_timeout():
 	Global.game_start = true
+	print("SO")
 	spawn_player_cookie()
 	spawn_enemy_cookie()
 	print("Current Phase: ", PhaseManager.current_state)
 	bet_phase_timer.start()
 	$BetTickingIncrement.play()
+	$UI.show()
 
 func camera_zoom(delta) -> void:
 	camera.zoom.x = lerp(camera.zoom.x, 1.0, delta * 2)
 	camera.zoom.y = lerp(camera.zoom.y, 1.0, delta * 2)
-	camera.global_position = lerp(camera.global_position, Vector2.ZERO, delta * 2)
 
 func spawn_player_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
@@ -170,6 +164,7 @@ func battle() -> void:
 func start_result_phase() -> void:
 	PhaseManager.current_state = 2
 	print("Current Phase: ", PhaseManager.current_state, " - result phase starts")
+	$UI/PickInstructions.hide()
 	
 	# MINIMUM BET
 	if player_thrown_cookies_counter <= 5 and Global.player_total_cookies > 5:
@@ -228,18 +223,21 @@ func _on_paw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "paw"
 		$PawButtonClick.play()
+		$UI/PickInstructions.hide()
 		battle()
 
 func _on_claw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "claw"
 		$ClawButtonClick.play()
+		$UI/PickInstructions.hide()
 		battle()
 
 func _on_roar_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "roar"
 		$RoarButtonClick.play()
+		$UI/PickInstructions.hide()
 		battle()
 
 # COOKIES ENTERS PAW AREA
@@ -320,6 +318,7 @@ func _on_bet_phase_timer_timeout() -> void:
 	PhaseManager.current_state = 1
 	bet_phase_label.text = ""
 	print("Current Phase: ", PhaseManager.current_state, " - bet timer time out")
+	$UI/PickInstructions.show()
 
 func _on_result_timer_timeout() -> void:
 	PhaseManager.current_state = 0
