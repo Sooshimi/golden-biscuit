@@ -3,6 +3,7 @@ extends Node2D
 @onready var camera := $Camera2D
 @onready var ui := $UI
 @onready var menu := $Menu
+@onready var menu_transition_timer := $MenuTransitionTimer
 @onready var bet_area := $BetArea
 @onready var paw_button := $UI/PawButton
 @onready var claw_button := $UI/ClawButton
@@ -12,9 +13,9 @@ extends Node2D
 @onready var paw_cookie_counter := $UI/PawCookieCounter
 @onready var claw_cookie_counter := $UI/ClawCookieCounter
 @onready var roar_cookie_counter := $UI/RoarCookieCounter
-@onready var paw_cookie_area := $bet_area/PawArea
-@onready var claw_cookie_area := $bet_area/ClawArea
-@onready var roar_cookie_area := $bet_area/RoarArea
+@onready var paw_cookie_area := $BetArea/PawArea
+@onready var claw_cookie_area := $BetArea/ClawArea
+@onready var roar_cookie_area := $BetArea/RoarArea
 @onready var player_cookie_spawn_area := $UI/PlayerCookieSpawnArea
 @onready var enemy_cookie_spawn_area := $UI/EnemyCookieSpawnArea
 @onready var bet_phase_timer := $BetPhaseTimer
@@ -37,6 +38,7 @@ var player_cookie_holder_pot := []
 var enemy_cookie_holder_pot := []
 
 var menu_camera_global_position := Vector2(130, 60)
+var start_game_button_pressed := false
 
 func _ready() -> void:
 	camera.global_position = menu_camera_global_position
@@ -52,15 +54,18 @@ func _process(delta) -> void:
 	if PhaseManager.current_state == 2:
 		timer_label.text = ""
 	
-	if Global.game_start:
+	if start_game_button_pressed:
 		camera_zoom(delta)
 
 func _on_start_game_button_pressed() -> void:
-	Global.game_start = true
+	start_game_button_pressed = true
+	menu_transition_timer.start()
 	ui.show()
 	bet_area.show()
 	menu.hide()
-	
+
+func _on_menu_transition_timer_timeout():
+	Global.game_start = true
 	update_score()
 	spawn_player_cookie()
 	spawn_enemy_cookie()

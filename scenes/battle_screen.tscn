@@ -33,6 +33,10 @@ grow_vertical = 2
 text = "Start Game"
 metadata/_edit_use_anchors_ = true
 
+[node name="MenuTransitionTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -11.0
 offset_top = -3.0
@@ -226,6 +230,7 @@ wait_time = 3.0
 one_shot = true
 
 [connection signal="pressed" from="Menu/StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="timeout" from="MenuTransitionTimer" to="." method="_on_menu_transition_timer_timeout"]
 [connection signal="body_entered" from="BetArea/PawArea" to="." method="_on_paw_area_body_entered"]
 [connection signal="body_exited" from="BetArea/PawArea" to="." method="_on_paw_area_body_exited"]
 [connection signal="body_entered" from="BetArea/ClawArea" to="." method="_on_claw_area_body_entered"]
