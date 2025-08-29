@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=19 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cg38s2l0yinn5" path="res://assets/Chalk_area_PCR_Scribbles1.png" id="11_lskjy"]
 [ext_resource type="Texture2D" uid="uid://uwi4qti11bga" path="res://assets/panel_1.png" id="11_qm3lx"]
 [ext_resource type="Texture2D" uid="uid://oktq0wjvjpw4" path="res://assets/Rock_button_green.png" id="13_81rp5"]
+[ext_resource type="Texture2D" uid="uid://bru4o185imugk" path="res://assets/Enemy_Panel_Purple1.png" id="13_bgqsx"]
 [ext_resource type="Texture2D" uid="uid://di3glr466vgou" path="res://assets/paper_button_yellow.png" id="14_20e4q"]
 [ext_resource type="Texture2D" uid="uid://o1hlghtu3582" path="res://assets/Scissors_button_pink.png" id="15_20e4q"]
 
@@ -250,7 +251,7 @@ position = Vector2(315, 268)
 shape = SubResource("CircleShape2D_jkca0")
 
 [node name="EnemyCookieSpawnArea" type="Area2D" parent="UI"]
-position = Vector2(313, 40)
+position = Vector2(311, 17)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UI/EnemyCookieSpawnArea"]
 shape = SubResource("CircleShape2D_jkca0")
@@ -286,13 +287,29 @@ offset_bottom = 366.0
 texture = ExtResource("11_lskjy")
 stretch_mode = 4
 
-[node name="PlayerPanel" type="TextureRect" parent="."]
-offset_left = 35.0
-offset_top = 252.0
-offset_right = 598.0
-offset_bottom = 407.0
+[node name="PlayerPanel" type="Sprite2D" parent="."]
+position = Vector2(316, 305)
+scale = Vector2(1.8, 1.8)
 texture = ExtResource("11_qm3lx")
-stretch_mode = 4
+
+[node name="EnemyPanel" type="Sprite2D" parent="."]
+position = Vector2(312, 162)
+scale = Vector2(1.8, 1.8)
+texture = ExtResource("13_bgqsx")
+
+[node name="ClawButton" type="Sprite2D" parent="."]
+position = Vector2(315.215, 326)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("14_20e4q")
+region_enabled = true
+region_rect = Rect2(147, 36, 25, 19)
+
+[node name="RoarButton" type="Sprite2D" parent="."]
+position = Vector2(365.22, 326)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("15_20e4q")
+region_enabled = true
+region_rect = Rect2(191, 36, 25, 19)
 
 [node name="PawButton" type="Sprite2D" parent="."]
 position = Vector2(265, 326)
@@ -300,20 +317,6 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("13_81rp5")
 region_enabled = true
 region_rect = Rect2(103, 36, 25, 19)
-
-[node name="PawButton2" type="Sprite2D" parent="."]
-position = Vector2(315.215, 326)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("14_20e4q")
-region_enabled = true
-region_rect = Rect2(147, 36, 25, 19)
-
-[node name="PawButton3" type="Sprite2D" parent="."]
-position = Vector2(365.22, 326)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("15_20e4q")
-region_enabled = true
-region_rect = Rect2(191, 36, 25, 19)
 
 [node name="GameOver" type="CanvasLayer" parent="."]
 visible = false
