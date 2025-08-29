@@ -1,24 +1,27 @@
 extends Node2D
 
 @onready var camera := $Camera2D
-@onready var paw_button := $CanvasLayer/PawButton
-@onready var claw_button := $CanvasLayer/ClawButton
-@onready var roar_button := $CanvasLayer/RoarButton
-@onready var player_cookie_counter := $CanvasLayer/PlayerCookieCounter
-@onready var enemy_cookie_counter := $CanvasLayer/EnemyCookieCounter
-@onready var paw_cookie_counter := $CanvasLayer/PawCookieCounter
-@onready var claw_cookie_counter := $CanvasLayer/ClawCookieCounter
-@onready var roar_cookie_counter := $CanvasLayer/RoarCookieCounter
+@onready var ui := $UI
+@onready var menu := $Menu
+@onready var bet_area := $BetArea
+@onready var paw_button := $UI/PawButton
+@onready var claw_button := $UI/ClawButton
+@onready var roar_button := $UI/RoarButton
+@onready var player_cookie_counter := $UI/PlayerCookieCounter
+@onready var enemy_cookie_counter := $UI/EnemyCookieCounter
+@onready var paw_cookie_counter := $UI/PawCookieCounter
+@onready var claw_cookie_counter := $UI/ClawCookieCounter
+@onready var roar_cookie_counter := $UI/RoarCookieCounter
 @onready var paw_cookie_area := $bet_area/PawArea
 @onready var claw_cookie_area := $bet_area/ClawArea
 @onready var roar_cookie_area := $bet_area/RoarArea
-@onready var player_cookie_spawn_area := $CanvasLayer/PlayerCookieSpawnArea
-@onready var enemy_cookie_spawn_area := $CanvasLayer/EnemyCookieSpawnArea
+@onready var player_cookie_spawn_area := $UI/PlayerCookieSpawnArea
+@onready var enemy_cookie_spawn_area := $UI/EnemyCookieSpawnArea
 @onready var bet_phase_timer := $BetPhaseTimer
-@onready var timer_label := $TimerLabel
-@onready var bet_phase_label := $BetPhaseLabel
-@onready var player_result_label := $CanvasLayer/PlayerResultLabel
-@onready var enemy_result_label := $CanvasLayer/EnemyResultLabel
+@onready var timer_label := $UI/TimerLabel
+@onready var bet_phase_label := $UI/BetPhaseLabel
+@onready var player_result_label := $UI/PlayerResultLabel
+@onready var enemy_result_label := $UI/EnemyResultLabel
 @onready var result_timer := $ResultTimer
 
 var cookie_scene: PackedScene = preload("res://scenes/cookie.tscn")
@@ -37,11 +40,8 @@ var menu_camera_global_position := Vector2(130, 60)
 
 func _ready() -> void:
 	camera.global_position = menu_camera_global_position
-	update_score()
-	spawn_player_cookie()
-	spawn_enemy_cookie()
-	print("Current Phase: ", PhaseManager.current_state)
-	bet_phase_timer.start()
+	ui.hide()
+	bet_area.hide()
 
 func _process(delta) -> void:
 	timer_label.text = str(int(bet_phase_timer.time_left))
@@ -52,7 +52,20 @@ func _process(delta) -> void:
 	if PhaseManager.current_state == 2:
 		timer_label.text = ""
 	
-	camera_zoom(delta)
+	if Global.game_start:
+		camera_zoom(delta)
+
+func _on_start_game_button_pressed() -> void:
+	Global.game_start = true
+	ui.show()
+	bet_area.show()
+	menu.hide()
+	
+	update_score()
+	spawn_player_cookie()
+	spawn_enemy_cookie()
+	print("Current Phase: ", PhaseManager.current_state)
+	bet_phase_timer.start()
 
 func camera_zoom(delta) -> void:
 	camera.zoom.x = lerp(camera.zoom.x, 1.0, delta * 2)
@@ -268,7 +281,7 @@ func _on_bet_phase_timer_timeout() -> void:
 	bet_phase_label.text = ""
 	print("Current Phase: ", PhaseManager.current_state, " - bet timer time out")
 
-func _on_result_timer_timeout():
+func _on_result_timer_timeout() -> void:
 	PhaseManager.current_state = 0
 	print("Current Phase: ", PhaseManager.current_state, " - result timer time out")
 	player_result_label.text = ""

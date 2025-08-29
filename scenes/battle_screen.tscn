@@ -19,8 +19,19 @@ zoom = Vector2(1.29, 1.29)
 [node name="Menu" type="CanvasLayer" parent="."]
 
 [node name="StartGameButton" type="Button" parent="Menu"]
-offset_right = 8.0
-offset_bottom = 8.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start Game"
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -11.0
@@ -31,15 +42,15 @@ texture = ExtResource("2_jkca0")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="bet_area" type="Node2D" parent="."]
+[node name="BetArea" type="Node2D" parent="."]
 
-[node name="PawArea" type="Area2D" parent="bet_area"]
+[node name="PawArea" type="Area2D" parent="BetArea"]
 position = Vector2(193, 158)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bet_area/PawArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BetArea/PawArea"]
 shape = SubResource("RectangleShape2D_jkca0")
 
-[node name="ColorRect" type="ColorRect" parent="bet_area/PawArea"]
+[node name="ColorRect" type="ColorRect" parent="BetArea/PawArea"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -56,13 +67,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.0295066, 0.0295066, 0.0295066, 0.47451)
 
-[node name="ClawArea" type="Area2D" parent="bet_area"]
+[node name="ClawArea" type="Area2D" parent="BetArea"]
 position = Vector2(315, 158)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bet_area/ClawArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BetArea/ClawArea"]
 shape = SubResource("RectangleShape2D_jkca0")
 
-[node name="ColorRect" type="ColorRect" parent="bet_area/ClawArea"]
+[node name="ColorRect" type="ColorRect" parent="BetArea/ClawArea"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -79,13 +90,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.0295066, 0.0295066, 0.0295066, 0.47451)
 
-[node name="RoarArea" type="Area2D" parent="bet_area"]
+[node name="RoarArea" type="Area2D" parent="BetArea"]
 position = Vector2(438, 158)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bet_area/RoarArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BetArea/RoarArea"]
 shape = SubResource("RectangleShape2D_jkca0")
 
-[node name="ColorRect" type="ColorRect" parent="bet_area/RoarArea"]
+[node name="ColorRect" type="ColorRect" parent="BetArea/RoarArea"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -102,27 +113,27 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.0295066, 0.0295066, 0.0295066, 0.47451)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
 
-[node name="PawButton" type="Button" parent="CanvasLayer"]
+[node name="PawButton" type="Button" parent="UI"]
 offset_left = 247.0
 offset_top = 308.0
 offset_right = 284.0
 offset_bottom = 343.0
 
-[node name="ClawButton" type="Button" parent="CanvasLayer"]
+[node name="ClawButton" type="Button" parent="UI"]
 offset_left = 295.0
 offset_top = 308.0
 offset_right = 332.0
 offset_bottom = 343.0
 
-[node name="Roarbutton" type="Button" parent="CanvasLayer"]
+[node name="Roarbutton" type="Button" parent="UI"]
 offset_left = 347.0
 offset_top = 308.0
 offset_right = 384.0
 offset_bottom = 343.0
 
-[node name="PlayerCookieCounter" type="Label" parent="CanvasLayer"]
+[node name="PlayerCookieCounter" type="Label" parent="UI"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 329.0
 offset_top = 281.0
@@ -131,7 +142,7 @@ offset_bottom = 306.0
 text = "0"
 horizontal_alignment = 1
 
-[node name="EnemyCookieCounter" type="Label" parent="CanvasLayer"]
+[node name="EnemyCookieCounter" type="Label" parent="UI"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 331.0
 offset_top = 31.0
@@ -140,7 +151,7 @@ offset_bottom = 56.0
 text = "0"
 horizontal_alignment = 1
 
-[node name="PawCookieCounter" type="Label" parent="CanvasLayer"]
+[node name="PawCookieCounter" type="Label" parent="UI"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 165.0
 offset_top = 224.0
@@ -149,7 +160,7 @@ offset_bottom = 247.0
 text = "0"
 horizontal_alignment = 1
 
-[node name="ClawCookieCounter" type="Label" parent="CanvasLayer"]
+[node name="ClawCookieCounter" type="Label" parent="UI"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 296.0
 offset_top = 222.0
@@ -158,7 +169,7 @@ offset_bottom = 245.0
 text = "0"
 horizontal_alignment = 1
 
-[node name="RoarCookieCounter" type="Label" parent="CanvasLayer"]
+[node name="RoarCookieCounter" type="Label" parent="UI"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 420.0
 offset_top = 222.0
@@ -167,35 +178,31 @@ offset_bottom = 245.0
 text = "0"
 horizontal_alignment = 1
 
-[node name="PlayerResultLabel" type="Label" parent="CanvasLayer"]
+[node name="PlayerResultLabel" type="Label" parent="UI"]
 offset_left = 226.0
 offset_top = 266.0
 offset_right = 266.0
 offset_bottom = 289.0
 
-[node name="EnemyResultLabel" type="Label" parent="CanvasLayer"]
+[node name="EnemyResultLabel" type="Label" parent="UI"]
 offset_left = 230.0
 offset_top = 44.0
 offset_right = 270.0
 offset_bottom = 67.0
 
-[node name="PlayerCookieSpawnArea" type="Area2D" parent="CanvasLayer"]
+[node name="PlayerCookieSpawnArea" type="Area2D" parent="UI"]
 position = Vector2(315, 274)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/PlayerCookieSpawnArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/PlayerCookieSpawnArea"]
 shape = SubResource("CircleShape2D_jkca0")
 
-[node name="EnemyCookieSpawnArea" type="Area2D" parent="CanvasLayer"]
+[node name="EnemyCookieSpawnArea" type="Area2D" parent="UI"]
 position = Vector2(313, 57)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/EnemyCookieSpawnArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/EnemyCookieSpawnArea"]
 shape = SubResource("CircleShape2D_jkca0")
 
-[node name="BetPhaseTimer" type="Timer" parent="."]
-wait_time = 7.0
-one_shot = true
-
-[node name="BetPhaseLabel" type="Label" parent="."]
+[node name="BetPhaseLabel" type="Label" parent="UI"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 406.0
 offset_top = 265.0
@@ -203,29 +210,34 @@ offset_right = 554.0
 offset_bottom = 288.0
 text = "Place your cookies!"
 
-[node name="TimerLabel" type="Label" parent="."]
+[node name="TimerLabel" type="Label" parent="UI"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 407.0
 offset_top = 290.0
 offset_right = 447.0
 offset_bottom = 313.0
 
+[node name="BetPhaseTimer" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+
 [node name="ResultTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 
-[connection signal="body_entered" from="bet_area/PawArea" to="." method="_on_paw_area_body_entered"]
-[connection signal="body_exited" from="bet_area/PawArea" to="." method="_on_paw_area_body_exited"]
-[connection signal="body_entered" from="bet_area/ClawArea" to="." method="_on_claw_area_body_entered"]
-[connection signal="body_exited" from="bet_area/ClawArea" to="." method="_on_claw_area_body_exited"]
-[connection signal="body_entered" from="bet_area/RoarArea" to="." method="_on_roar_area_body_entered"]
-[connection signal="body_exited" from="bet_area/RoarArea" to="." method="_on_roar_area_body_exited"]
-[connection signal="pressed" from="CanvasLayer/PawButton" to="." method="_on_paw_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/ClawButton" to="." method="_on_claw_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Roarbutton" to="." method="_on_roar_button_pressed"]
-[connection signal="body_entered" from="CanvasLayer/PlayerCookieSpawnArea" to="." method="_on_player_cookie_spawn_area_body_entered"]
-[connection signal="body_exited" from="CanvasLayer/PlayerCookieSpawnArea" to="." method="_on_player_cookie_spawn_area_body_exited"]
-[connection signal="body_entered" from="CanvasLayer/EnemyCookieSpawnArea" to="." method="_on_enemy_cookie_spawn_area_body_entered"]
-[connection signal="body_exited" from="CanvasLayer/EnemyCookieSpawnArea" to="." method="_on_enemy_cookie_spawn_area_body_exited"]
+[connection signal="pressed" from="Menu/StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="body_entered" from="BetArea/PawArea" to="." method="_on_paw_area_body_entered"]
+[connection signal="body_exited" from="BetArea/PawArea" to="." method="_on_paw_area_body_exited"]
+[connection signal="body_entered" from="BetArea/ClawArea" to="." method="_on_claw_area_body_entered"]
+[connection signal="body_exited" from="BetArea/ClawArea" to="." method="_on_claw_area_body_exited"]
+[connection signal="body_entered" from="BetArea/RoarArea" to="." method="_on_roar_area_body_entered"]
+[connection signal="body_exited" from="BetArea/RoarArea" to="." method="_on_roar_area_body_exited"]
+[connection signal="pressed" from="UI/PawButton" to="." method="_on_paw_button_pressed"]
+[connection signal="pressed" from="UI/ClawButton" to="." method="_on_claw_button_pressed"]
+[connection signal="pressed" from="UI/Roarbutton" to="." method="_on_roar_button_pressed"]
+[connection signal="body_entered" from="UI/PlayerCookieSpawnArea" to="." method="_on_player_cookie_spawn_area_body_entered"]
+[connection signal="body_exited" from="UI/PlayerCookieSpawnArea" to="." method="_on_player_cookie_spawn_area_body_exited"]
+[connection signal="body_entered" from="UI/EnemyCookieSpawnArea" to="." method="_on_enemy_cookie_spawn_area_body_entered"]
+[connection signal="body_exited" from="UI/EnemyCookieSpawnArea" to="." method="_on_enemy_cookie_spawn_area_body_exited"]
 [connection signal="timeout" from="BetPhaseTimer" to="." method="_on_bet_phase_timer_timeout"]
 [connection signal="timeout" from="ResultTimer" to="." method="_on_result_timer_timeout"]
