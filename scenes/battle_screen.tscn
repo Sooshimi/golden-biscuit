@@ -28,10 +28,12 @@ script = ExtResource("1_jkca0")
 
 [node name="MainMenuMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_jwmpd")
+bus = &"Main Loop"
 parameters/looping = true
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_6lb5u")
+bus = &"Background"
 
 [node name="EnterRingSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_jwmpd")

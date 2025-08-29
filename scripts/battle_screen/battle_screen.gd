@@ -42,6 +42,10 @@ var player_cookie_holder_pot := []
 var enemy_cookie_holder_pot := []
 
 var start_game_button_pressed := false
+var background_bus = AudioServer.get_bus_index("Background")
+var background_bus_volume = AudioServer.get_bus_volume_db(background_bus)
+var main_loop_bus = AudioServer.get_bus_index("Main Loop")
+var main_loop_bus_volume = AudioServer.get_bus_volume_db(main_loop_bus)
 
 func _ready() -> void:
 	Global.game_start = false
@@ -57,16 +61,19 @@ func _process(delta) -> void:
 	
 	if start_game_button_pressed:
 		camera_zoom(delta)
-		$MainMenuMusic.volume_db -= 0.05
-		if $BackgroundMusic.volume_db <= 0.0:
-			$BackgroundMusic.volume_db += 0.1
+		print($MainMenuMusic.volume_db)
+		if $MainMenuMusic.volume_db > main_loop_bus_volume:
+			$MainMenuMusic.volume_db -= 0.05
+		if $BackgroundMusic.volume_db <= background_bus_volume:
+			$BackgroundMusic.volume_db += 1.0
+			
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
 	menu_transition_timer.start()
 	bet_area.show()
 	menu.hide()
-	$BackgroundMusic.volume_db = 0.0
+	$BackgroundMusic.volume_db = -80.0
 	$BackgroundMusic.play()
 	$EnterRingSFX.play()
 
