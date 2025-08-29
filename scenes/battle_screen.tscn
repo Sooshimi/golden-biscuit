@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=6 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="Texture2D" uid="uid://duofnf5orc3hp" path="res://assets/arena_floor_background.png" id="2_jkca0"]
+[ext_resource type="AudioStream" uid="uid://b311aofscatbd" path="res://audio/Music/main_menu.mp3" id="2_y5my5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkca0"]
 size = Vector2(93.1875, 118.75)
@@ -11,6 +12,9 @@ radius = 21.0
 
 [node name="Battle Screen" type="Node2D"]
 script = ExtResource("1_jkca0")
+
+[node name="MainMenuMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_y5my5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

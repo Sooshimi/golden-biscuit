@@ -47,6 +47,7 @@ func _ready() -> void:
 	camera.global_position = menu_camera_global_position
 	ui.hide()
 	bet_area.hide()
+	$MainMenuMusic.play()
 
 func _process(delta) -> void:
 	timer_label.text = str(int(bet_phase_timer.time_left))
