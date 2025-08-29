@@ -72,6 +72,7 @@ func _on_start_game_button_pressed() -> void:
 	menu.hide()
 	$BackgroundMusic.volume_db = 0.0
 	$BackgroundMusic.play()
+	$EnterRingSFX.play()
 
 func _on_menu_transition_timer_timeout():
 	Global.game_start = true
