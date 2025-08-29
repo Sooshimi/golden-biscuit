@@ -33,6 +33,7 @@ var cookie_scene: PackedScene = preload("res://scenes/cookie.tscn")
 var enemy_choice := ""
 var player_choice := ""
 const choices := ["paw", "claw", "roar"]
+var player_thrown_cookies_counter := 0
 
 var paw_cookie_pot := []
 var claw_cookie_pot := []
@@ -169,6 +170,11 @@ func start_result_phase() -> void:
 	PhaseManager.current_state = 2
 	print("Current Phase: ", PhaseManager.current_state, " - result phase starts")
 	
+	# MINIMUM BET
+	if player_thrown_cookies_counter <= 5 and Global.player_total_cookies > 5:
+		Global.player_total_cookies -= 5
+		update_score()
+	
 	# GAME OVER
 	if PhaseManager.current_state == 2:
 		if Global.player_total_cookies == 0 or Global.enemy_total_cookies == 0:
@@ -286,6 +292,7 @@ func _on_player_cookie_spawn_area_body_exited(body: RigidBody2D) -> void:
 	
 	if Global.player_total_cookies > 0 and player_cookie_holder_pot.size() < 1:
 		spawn_player_cookie()
+		player_thrown_cookies_counter += 1
 	
 	update_score()
 
@@ -316,6 +323,7 @@ func _on_bet_phase_timer_timeout() -> void:
 func _on_result_timer_timeout() -> void:
 	PhaseManager.current_state = 0
 	print("Current Phase: ", PhaseManager.current_state, " - result timer time out")
+	player_thrown_cookies_counter = 0
 	player_result_label.text = ""
 	enemy_result_label.text = ""
 	bet_phase_label.text = "Place your cookies!"
