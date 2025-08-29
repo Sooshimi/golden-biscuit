@@ -61,7 +61,7 @@ func _process(delta) -> void:
 	if start_game_button_pressed:
 		camera_zoom(delta)
 		$MainMenuMusic.volume_db -= 0.05
-		if $BackgroundMusic.volume_db <= 0.9:
+		if $BackgroundMusic.volume_db <= 0.5:
 			$BackgroundMusic.volume_db += 0.1
 
 func _on_start_game_button_pressed() -> void:
@@ -80,6 +80,7 @@ func _on_menu_transition_timer_timeout():
 	spawn_enemy_cookie()
 	print("Current Phase: ", PhaseManager.current_state)
 	bet_phase_timer.start()
+	$BetTickingIncrement.play()
 
 func camera_zoom(delta) -> void:
 	camera.zoom.x = lerp(camera.zoom.x, 1.0, delta * 2)
@@ -219,16 +220,19 @@ func remove_paw_cookies() -> void:
 func _on_paw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "paw"
+		$PawButtonClick.play()
 		battle()
 
 func _on_claw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "claw"
+		$ClawButtonClick.play()
 		battle()
 
 func _on_roar_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "roar"
+		$RoarButtonClick.play()
 		battle()
 
 # COOKIES ENTERS PAW AREA
@@ -316,6 +320,7 @@ func _on_result_timer_timeout() -> void:
 	enemy_result_label.text = ""
 	bet_phase_label.text = "Place your cookies!"
 	bet_phase_timer.start()
+	$BetTickingIncrement.play()
 	spawn_enemy_cookie()
 
 func _on_play_again_button_pressed():
