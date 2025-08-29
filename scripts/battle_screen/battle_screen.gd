@@ -61,7 +61,6 @@ func _process(delta) -> void:
 	
 	if start_game_button_pressed:
 		camera_zoom(delta)
-		print($MainMenuMusic.volume_db)
 		if $MainMenuMusic.volume_db > main_loop_bus_volume:
 			$MainMenuMusic.volume_db -= 0.05
 		if $BackgroundMusic.volume_db < background_bus_volume:
@@ -78,7 +77,6 @@ func _on_start_game_button_pressed() -> void:
 
 func _on_menu_transition_timer_timeout():
 	Global.game_start = true
-	print("SO")
 	spawn_player_cookie()
 	spawn_enemy_cookie()
 	print("Current Phase: ", PhaseManager.current_state)
