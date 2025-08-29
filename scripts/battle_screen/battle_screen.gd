@@ -35,6 +35,9 @@ var player_choice := ""
 const choices := ["paw", "claw", "roar"]
 var player_thrown_cookies_counter := 0
 var minimum_bet := 5
+var enemy_panel_default_position_y := 162.0
+var player_panel_default_position_y := 306.0
+var trinity_default_position_x := 77.0
 
 var paw_cookie_pot := []
 var claw_cookie_pot := []
@@ -54,7 +57,7 @@ func _ready() -> void:
 	bet_area.hide()
 	$MainMenuMusic.play()
 
-func _process(delta) -> void:
+func _process(delta: float) -> void:
 	if bet_phase_timer.time_left > 0:
 		timer_label.text = str(int(bet_phase_timer.time_left + 1))
 	else:
@@ -62,6 +65,7 @@ func _process(delta) -> void:
 	
 	if start_game_button_pressed:
 		camera_zoom(delta)
+		panels_slide_in(delta)
 		if $MainMenuMusic.volume_db > main_loop_bus_volume:
 			$MainMenuMusic.volume_db -= 0.05
 		if $BackgroundMusic.volume_db < background_bus_volume:
@@ -76,7 +80,7 @@ func _on_start_game_button_pressed() -> void:
 	$BackgroundMusic.play()
 	$EnterRingSFX.play()
 
-func _on_menu_transition_timer_timeout():
+func _on_menu_transition_timer_timeout() -> void:
 	Global.game_start = true
 	spawn_player_cookie()
 	spawn_enemy_cookie()
@@ -85,9 +89,14 @@ func _on_menu_transition_timer_timeout():
 	$BetTickingIncrement.play()
 	$UI.show()
 
-func camera_zoom(delta) -> void:
-	camera.zoom.x = lerp(camera.zoom.x, 1.0, delta * 2)
-	camera.zoom.y = lerp(camera.zoom.y, 1.0, delta * 2)
+func camera_zoom(delta: float) -> void:
+	camera.zoom.x = lerp(camera.zoom.x, 1.0, delta * 3)
+	camera.zoom.y = lerp(camera.zoom.y, 1.0, delta * 3)
+
+func panels_slide_in(delta: float) -> void:
+	$PlayerPanel.global_position.y = lerp($PlayerPanel.global_position.y, player_panel_default_position_y, delta * 3)
+	$EnemyPanel.global_position.y = lerp($EnemyPanel.global_position.y, enemy_panel_default_position_y, delta * 3)
+	$Trinity.global_position.x = lerp($Trinity.global_position.x, trinity_default_position_x, delta * 3)
 
 func spawn_player_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
@@ -228,6 +237,8 @@ func remove_paw_cookies() -> void:
 func _on_paw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "paw"
+		$PlayerPanel/PawButtonDefault.hide()
+		$PlayerPanel/PawButtonPressed.show()
 		$PawButtonClick.play()
 		$UI/PickInstructions.hide()
 		battle()
@@ -235,6 +246,8 @@ func _on_paw_button_pressed() -> void:
 func _on_claw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "claw"
+		$PlayerPanel/ClawButtonDefault.hide()
+		$PlayerPanel/ClawButtonPressed.show()
 		$ClawButtonClick.play()
 		$UI/PickInstructions.hide()
 		battle()
@@ -242,6 +255,8 @@ func _on_claw_button_pressed() -> void:
 func _on_roar_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "roar"
+		$PlayerPanel/RoarButtonDefault.hide()
+		$PlayerPanel/RoarButtonPressed.show()
 		$RoarButtonClick.play()
 		$UI/PickInstructions.hide()
 		battle()
@@ -337,6 +352,12 @@ func _on_result_timer_timeout() -> void:
 	player_result_label.text = ""
 	enemy_result_label.text = ""
 	bet_phase_label.text = "Place your cookies!"
+	$PlayerPanel/PawButtonDefault.show()
+	$PlayerPanel/PawButtonPressed.hide()
+	$PlayerPanel/ClawButtonDefault.show()
+	$PlayerPanel/ClawButtonPressed.hide()
+	$PlayerPanel/RoarButtonDefault.show()
+	$PlayerPanel/RoarButtonPressed.hide()
 	bet_phase_timer.start()
 	$BetTickingIncrement.play()
 	spawn_enemy_cookie()

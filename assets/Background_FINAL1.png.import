@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3h3ohgg8qrbq"
-path="res://.godot/imported/Gravel_Background_V2.png-d8761138427beaa3d25a36fb10bebd4b.ctex"
+uid="uid://bipt1x5h2mpfv"
+path="res://.godot/imported/Background_FINAL1.png-07edcc2bdb3611bfddaba5f7131b75be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Gravel_Background_V2.png"
-dest_files=["res://.godot/imported/Gravel_Background_V2.png-d8761138427beaa3d25a36fb10bebd4b.ctex"]
+source_file="res://assets/Background_FINAL1.png"
+dest_files=["res://.godot/imported/Background_FINAL1.png-07edcc2bdb3611bfddaba5f7131b75be.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=20 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
@@ -9,8 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://bct00visjud2s" path="res://audio/SFX/objects/ticking_increment.mp3" id="7_vehr2"]
 [ext_resource type="AudioStream" uid="uid://d1scn5gk2irh6" path="res://audio/SFX/objects/button_press_1.mp3" id="8_ikkpg"]
 [ext_resource type="AudioStream" uid="uid://d4g4d1o8qvydb" path="res://audio/SFX/objects/button_press_3.mp3" id="9_lskjy"]
-[ext_resource type="Texture2D" uid="uid://3h3ohgg8qrbq" path="res://assets/Gravel_Background_V2.png" id="10_ikkpg"]
+[ext_resource type="Texture2D" uid="uid://bipt1x5h2mpfv" path="res://assets/Background_FINAL1.png" id="10_bgqsx"]
 [ext_resource type="Texture2D" uid="uid://cg38s2l0yinn5" path="res://assets/Chalk_area_PCR_Scribbles1.png" id="11_lskjy"]
+[ext_resource type="Texture2D" uid="uid://cd48jfxxjpfp2" path="res://assets/tutorial_trinity1.png" id="11_p0qi6"]
 [ext_resource type="Texture2D" uid="uid://uwi4qti11bga" path="res://assets/panel_1.png" id="11_qm3lx"]
 [ext_resource type="Texture2D" uid="uid://oktq0wjvjpw4" path="res://assets/Rock_button_green.png" id="13_81rp5"]
 [ext_resource type="Texture2D" uid="uid://bru4o185imugk" path="res://assets/Enemy_Panel_Purple1.png" id="13_bgqsx"]
@@ -64,10 +65,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
+offset_left = -60.0
+offset_top = 74.0
+offset_right = 52.0
+offset_bottom = 103.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Start Game"
@@ -87,9 +88,16 @@ offset_left = -11.0
 offset_top = -3.0
 offset_right = 644.0
 offset_bottom = 395.0
-texture = ExtResource("10_ikkpg")
+texture = ExtResource("10_bgqsx")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="Trinity" type="Sprite2D" parent="."]
+position = Vector2(-64, 162)
+scale = Vector2(1.67, 1.67)
+texture = ExtResource("11_p0qi6")
+region_enabled = true
+region_rect = Rect2(0, 56, 72, 48)
 
 [node name="BetArea" type="Node2D" parent="."]
 
@@ -311,36 +319,62 @@ offset_bottom = 366.0
 texture = ExtResource("11_lskjy")
 stretch_mode = 4
 
-[node name="PlayerPanel" type="Sprite2D" parent="."]
-position = Vector2(316, 305)
-scale = Vector2(1.8, 1.8)
-texture = ExtResource("11_qm3lx")
-
 [node name="EnemyPanel" type="Sprite2D" parent="."]
-position = Vector2(312, 162)
+position = Vector2(316, 116)
 scale = Vector2(1.8, 1.8)
 texture = ExtResource("13_bgqsx")
 
-[node name="ClawButton" type="Sprite2D" parent="."]
-position = Vector2(316.965, 335.25)
-scale = Vector2(1.5, 1.5)
+[node name="PlayerPanel" type="Sprite2D" parent="."]
+position = Vector2(316, 416)
+scale = Vector2(1.8, 1.8)
+texture = ExtResource("11_qm3lx")
+
+[node name="PawButtonDefault" type="Sprite2D" parent="PlayerPanel"]
+position = Vector2(-26.667, 16)
+scale = Vector2(0.833333, 0.833333)
+texture = ExtResource("13_81rp5")
+region_enabled = true
+region_rect = Rect2(103, 36, 25, 19)
+
+[node name="PawButtonPressed" type="Sprite2D" parent="PlayerPanel"]
+visible = false
+position = Vector2(-26.806, 16)
+scale = Vector2(0.833333, 0.833333)
+texture = ExtResource("13_81rp5")
+region_enabled = true
+region_rect = Rect2(423, 36, 25, 19)
+
+[node name="ClawButtonDefault" type="Sprite2D" parent="PlayerPanel"]
+modulate = Color(0.789879, 0.789879, 0.789879, 1)
+position = Vector2(1.11111, 16.1111)
+scale = Vector2(0.833333, 0.833333)
 texture = ExtResource("14_20e4q")
 region_enabled = true
 region_rect = Rect2(147, 36, 25, 19)
 
-[node name="RoarButton" type="Sprite2D" parent="."]
-position = Vector2(366.97, 335.25)
-scale = Vector2(1.5, 1.5)
+[node name="ClawButtonPressed" type="Sprite2D" parent="PlayerPanel"]
+visible = false
+modulate = Color(0.789879, 0.789879, 0.789879, 1)
+position = Vector2(1.09165, 16)
+scale = Vector2(0.833333, 0.833333)
+texture = ExtResource("14_20e4q")
+region_enabled = true
+region_rect = Rect2(467, 36, 25, 19)
+
+[node name="RoarButtonDefault" type="Sprite2D" parent="PlayerPanel"]
+position = Vector2(28.8722, 16)
+scale = Vector2(0.833333, 0.833333)
 texture = ExtResource("15_20e4q")
 region_enabled = true
-region_rect = Rect2(191, 36, 25, 19)
+region_rect = Rect2(192, 36, 24, 20)
 
-[node name="PawButton" type="Sprite2D" parent="."]
-position = Vector2(266.75, 335.25)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("13_81rp5")
+[node name="RoarButtonPressed" type="Sprite2D" parent="PlayerPanel"]
+visible = false
+position = Vector2(28.8722, 16)
+scale = Vector2(0.833333, 0.833333)
+texture = ExtResource("15_20e4q")
 region_enabled = true
-region_rect = Rect2(103, 36, 25, 19)
+region_rect = Rect2(511, 36, 25, 19)
 
 [node name="GameOver" type="CanvasLayer" parent="."]
 visible = false
