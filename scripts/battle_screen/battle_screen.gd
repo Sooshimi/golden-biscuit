@@ -33,8 +33,10 @@ var roar_cookie_pot := []
 var player_cookie_holder_pot := []
 var enemy_cookie_holder_pot := []
 
+var menu_camera_global_position := Vector2(130, 60)
+
 func _ready() -> void:
-	camera.global_position = Vector2(130, 60)
+	camera.global_position = menu_camera_global_position
 	update_score()
 	spawn_player_cookie()
 	spawn_enemy_cookie()
