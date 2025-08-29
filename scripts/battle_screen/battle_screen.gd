@@ -66,7 +66,6 @@ func _process(delta) -> void:
 			$MainMenuMusic.volume_db -= 0.05
 		if $BackgroundMusic.volume_db < background_bus_volume:
 			$BackgroundMusic.volume_db += 1.0
-			
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
