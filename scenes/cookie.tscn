@@ -37,6 +37,10 @@ stream = ExtResource("3_2rrt0")
 volume_db = -4.0
 pitch_scale = 0.9
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-12.02, -9.24, 23.9, 18.37)
+
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="timeout" from="CookieThrowDelayTimer" to="." method="_on_cookie_throw_delay_timer_timeout"]
 [connection signal="timeout" from="CookieThrowDistanceTimer" to="." method="_on_cookie_throw_distance_timer_timeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

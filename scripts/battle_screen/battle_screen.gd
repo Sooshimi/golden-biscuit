@@ -38,6 +38,8 @@ var minimum_bet := 5
 var enemy_panel_default_position_y := 162.0
 var player_panel_default_position_y := 306.0
 var trinity_default_position_x := 77.0
+var player_win: bool
+var enemy_win: bool
 
 var paw_cookie_pot := []
 var claw_cookie_pot := []
@@ -70,6 +72,37 @@ func _process(delta: float) -> void:
 			$MainMenuMusic.volume_db -= 0.05
 		if $BackgroundMusic.volume_db < background_bus_volume:
 			$BackgroundMusic.volume_db += 1.0
+	
+	# COLLECT COOKIES
+	if PhaseManager.current_state == 2 and player_win:
+		if player_choice == "paw":
+			collect_cookies(paw_cookie_area)
+		elif player_choice == "claw":
+			collect_cookies(claw_cookie_area)
+		elif player_choice == "roar":
+			collect_cookies(roar_cookie_area)
+	elif PhaseManager.current_state == 2 and enemy_win:
+		if enemy_choice == "paw":
+			collect_cookies(paw_cookie_area)
+		elif enemy_choice == "claw":
+			collect_cookies(claw_cookie_area)
+		elif enemy_choice == "roar":
+			collect_cookies(roar_cookie_area)
+
+func collect_cookies(cookie_area: Node) -> void:
+	var speed = 500
+	for body in cookie_area.get_overlapping_bodies():
+		body.add_to_group("cookie_won")
+		body.set_collision_mask(0)
+		body.set_collision_layer(0)
+		
+	for body in get_tree().get_nodes_in_group("cookie_won"):
+		if player_win:
+			var direction = ($PlayerCookieCollector.global_position - body.global_position).normalized()
+			body.linear_velocity = direction * speed
+		elif enemy_win:
+			var direction = ($EnemyCookieCollector.global_position - body.global_position).normalized()
+			body.linear_velocity = direction * speed
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
@@ -127,11 +160,15 @@ func battle() -> void:
 		if player_choice == enemy_choice:
 			player_result_label.text = "Draw!"
 			enemy_result_label.text = "Draw!"
+			disable_buttons(false)
 		elif player_choice == "roar" and enemy_choice == "paw":
 			if Global.player_total_cookies == 0:
 				spawn_player_cookie()
 			player_result_label.text = "Win!"
 			enemy_result_label.text = "Lose!"
+			player_win = true
+			enemy_win = false
+			disable_buttons(true)
 			Global.player_total_cookies += roar_cookie_pot.size()
 			remove_roar_cookies()
 			start_result_phase()
@@ -140,6 +177,9 @@ func battle() -> void:
 				spawn_player_cookie()
 			player_result_label.text = "Win!"
 			enemy_result_label.text = "Lose!"
+			player_win = true
+			enemy_win = false
+			disable_buttons(true)
 			Global.player_total_cookies += paw_cookie_pot.size()
 			remove_paw_cookies()
 			start_result_phase()
@@ -148,6 +188,9 @@ func battle() -> void:
 				spawn_player_cookie()
 			player_result_label.text = "Win!"
 			enemy_result_label.text = "Lose!"
+			player_win = true
+			enemy_win = false
+			disable_buttons(true)
 			Global.player_total_cookies += claw_cookie_pot.size()
 			remove_claw_cookies()
 			start_result_phase()
@@ -156,6 +199,9 @@ func battle() -> void:
 				spawn_enemy_cookie()
 			player_result_label.text = "Lose!"
 			enemy_result_label.text = "Win!"
+			player_win = false
+			enemy_win = true
+			disable_buttons(true)
 			Global.enemy_total_cookies += roar_cookie_pot.size()
 			remove_roar_cookies()
 			start_result_phase()
@@ -164,6 +210,9 @@ func battle() -> void:
 				spawn_enemy_cookie()
 			player_result_label.text = "Lose!"
 			enemy_result_label.text = "Win!"
+			player_win = false
+			enemy_win = true
+			disable_buttons(true)
 			Global.enemy_total_cookies += paw_cookie_pot.size()
 			remove_paw_cookies()
 			start_result_phase()
@@ -172,6 +221,9 @@ func battle() -> void:
 				spawn_enemy_cookie()
 			player_result_label.text = "Lose!"
 			enemy_result_label.text = "Win!"
+			player_win = false
+			enemy_win = true
+			disable_buttons(true)
 			Global.enemy_total_cookies += claw_cookie_pot.size()
 			remove_claw_cookies()
 			start_result_phase()
@@ -205,9 +257,8 @@ func remove_roar_cookies() -> void:
 	roar_cookie_pot = []
 	roar_cookie_counter.text = str(0)
 	
-	for body in roar_cookie_area.get_overlapping_bodies():
-		body.queue_free()
-		#roar_cookie_area.get_overlapping_bodies().erase(0)
+	#for body in roar_cookie_area.get_overlapping_bodies():
+		#body.queue_free()
 	
 	update_roar_cookie_counter()
 	update_score()
@@ -216,9 +267,8 @@ func remove_claw_cookies() -> void:
 	claw_cookie_pot = []
 	claw_cookie_counter.text = str(0)
 	
-	for body in claw_cookie_area.get_overlapping_bodies():
-		body.queue_free()
-		#claw_cookie_area.get_overlapping_bodies().erase(0)
+	#for body in claw_cookie_area.get_overlapping_bodies():
+		#body.queue_free()
 	
 	update_claw_cookie_counter()
 	update_score()
@@ -227,9 +277,8 @@ func remove_paw_cookies() -> void:
 	paw_cookie_pot = []
 	paw_cookie_counter.text = str(0)
 	
-	for body in paw_cookie_area.get_overlapping_bodies():
-		body.queue_free()
-		#paw_cookie_area.get_overlapping_bodies().erase(0)
+	#for body in paw_cookie_area.get_overlapping_bodies():
+		#body.queue_free()
 	
 	update_roar_cookie_counter()
 	update_score()
@@ -241,32 +290,33 @@ func disable_buttons(toggle: bool) -> void:
 func _on_paw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "paw"
-		$PlayerPanel/PawButtonDefault.hide()
-		$PlayerPanel/PawButtonPressed.show()
-		disable_buttons(true)
+		battle()
+		if player_choice != enemy_choice:
+			$PlayerPanel/PawButtonDefault.hide()
+			$PlayerPanel/PawButtonPressed.show()
 		$PawButtonClick.play()
 		$UI/PickInstructions.hide()
-		battle()
+		
 
 func _on_claw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "claw"
-		$PlayerPanel/ClawButtonDefault.hide()
-		$PlayerPanel/ClawButtonPressed.show()
-		disable_buttons(true)
+		battle()
+		if player_choice != enemy_choice:
+			$PlayerPanel/ClawButtonDefault.hide()
+			$PlayerPanel/ClawButtonPressed.show()
 		$ClawButtonClick.play()
 		$UI/PickInstructions.hide()
-		battle()
 
 func _on_roar_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "roar"
-		$PlayerPanel/RoarButtonDefault.hide()
-		$PlayerPanel/RoarButtonPressed.show()
-		disable_buttons(true)
+		battle()
+		if player_choice != enemy_choice:
+			$PlayerPanel/RoarButtonDefault.hide()
+			$PlayerPanel/RoarButtonPressed.show()
 		$RoarButtonClick.play()
 		$UI/PickInstructions.hide()
-		battle()
 
 # COOKIES ENTERS PAW AREA
 func _on_paw_area_body_entered(body: RigidBody2D) -> void:
@@ -355,6 +405,8 @@ func _on_bet_phase_timer_timeout() -> void:
 func _on_result_timer_timeout() -> void:
 	PhaseManager.current_state = 0
 	print("Current Phase: ", PhaseManager.current_state, " - result timer time out")
+	player_win = false
+	enemy_win = false
 	player_thrown_cookies_counter = 0
 	player_result_label.text = ""
 	enemy_result_label.text = ""

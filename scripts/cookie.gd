@@ -55,3 +55,6 @@ func _on_cookie_throw_delay_timer_timeout():
 
 func _on_cookie_throw_distance_timer_timeout():
 	self.remove_from_group("enemy_cookie")
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()

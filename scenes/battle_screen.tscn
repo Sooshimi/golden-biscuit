@@ -376,6 +376,12 @@ texture = ExtResource("15_20e4q")
 region_enabled = true
 region_rect = Rect2(511, 36, 25, 19)
 
+[node name="PlayerCookieCollector" type="Marker2D" parent="."]
+position = Vector2(315, 392)
+
+[node name="EnemyCookieCollector" type="Marker2D" parent="."]
+position = Vector2(314, -28)
+
 [node name="GameOver" type="CanvasLayer" parent="."]
 visible = false
 
