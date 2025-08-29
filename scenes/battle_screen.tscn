@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=10 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="Texture2D" uid="uid://duofnf5orc3hp" path="res://assets/arena_floor_background.png" id="2_jkca0"]
 [ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
 [ext_resource type="AudioStream" uid="uid://da5ea5n085l6m" path="res://audio/SFX/Atmosphere/atmos_background.mp3" id="3_6lb5u"]
 [ext_resource type="AudioStream" uid="uid://b228jitbdrhh5" path="res://audio/SFX/stings/enter_ring_start_game.mp3" id="4_jwmpd"]
+[ext_resource type="AudioStream" uid="uid://18qlfyy7swnu" path="res://audio/SFX/stings/winning_sound.mp3" id="5_h607l"]
+[ext_resource type="AudioStream" uid="uid://b5txc8xotr4h3" path="res://audio/SFX/stings/losing_sound.mp3" id="6_vehr2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkca0"]
 size = Vector2(93.1875, 118.75)
@@ -24,6 +26,12 @@ stream = ExtResource("3_6lb5u")
 
 [node name="EnterRingSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_jwmpd")
+
+[node name="WinSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_h607l")
+
+[node name="LoseSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_vehr2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

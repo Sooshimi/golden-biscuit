@@ -176,8 +176,10 @@ func start_result_phase() -> void:
 			game_over.show()
 			if Global.player_total_cookies > Global.enemy_total_cookies:
 				game_over_result.text = "You win!"
+				$WinSound.play()
 			else:
 				game_over_result.text = "You lose!"
+				$LoseSound.play()
 		else:
 			result_timer.start()
 
