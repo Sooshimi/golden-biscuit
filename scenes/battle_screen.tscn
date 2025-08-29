@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=18 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://uwi4qti11bga" path="res://assets/panel_1.png" id="11_qm3lx"]
 [ext_resource type="Texture2D" uid="uid://oktq0wjvjpw4" path="res://assets/Rock_button_green.png" id="13_81rp5"]
 [ext_resource type="Texture2D" uid="uid://di3glr466vgou" path="res://assets/paper_button_yellow.png" id="14_20e4q"]
+[ext_resource type="Texture2D" uid="uid://o1hlghtu3582" path="res://assets/Scissors_button_pink.png" id="15_20e4q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkca0"]
 size = Vector2(102.594, 118.75)
@@ -166,18 +167,21 @@ color = Color(0.0295066, 0.0295066, 0.0295066, 0.47451)
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="PawButton" type="Button" parent="UI"]
+modulate = Color(1, 1, 1, 0)
 offset_left = 247.0
 offset_top = 308.0
 offset_right = 284.0
 offset_bottom = 343.0
 
 [node name="ClawButton" type="Button" parent="UI"]
-offset_left = 295.0
+modulate = Color(1, 1, 1, 0)
+offset_left = 297.0
 offset_top = 308.0
-offset_right = 332.0
+offset_right = 334.0
 offset_bottom = 343.0
 
 [node name="Roarbutton" type="Button" parent="UI"]
+modulate = Color(1, 1, 1, 0)
 offset_left = 347.0
 offset_top = 308.0
 offset_right = 384.0
@@ -297,19 +301,19 @@ texture = ExtResource("13_81rp5")
 region_enabled = true
 region_rect = Rect2(103, 36, 25, 19)
 
-[node name="ClawButton" type="Sprite2D" parent="."]
-position = Vector2(265, 326)
+[node name="PawButton2" type="Sprite2D" parent="."]
+position = Vector2(315.215, 326)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("14_20e4q")
 region_enabled = true
 region_rect = Rect2(147, 36, 25, 19)
 
 [node name="PawButton3" type="Sprite2D" parent="."]
-position = Vector2(265, 326)
+position = Vector2(365.22, 326)
 scale = Vector2(1.5, 1.5)
-texture = ExtResource("13_81rp5")
+texture = ExtResource("15_20e4q")
 region_enabled = true
-region_rect = Rect2(103, 36, 25, 19)
+region_rect = Rect2(191, 36, 25, 19)
 
 [node name="GameOver" type="CanvasLayer" parent="."]
 visible = false
