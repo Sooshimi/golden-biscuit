@@ -333,3 +333,5 @@ func _on_result_timer_timeout() -> void:
 
 func _on_play_again_button_pressed():
 	get_tree().reload_current_scene()
+	Global.player_total_cookies = Global.default
+	Global.player_total_cookies = Global.default
