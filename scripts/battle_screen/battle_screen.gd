@@ -293,10 +293,12 @@ func _on_player_cookie_spawn_area_body_exited(body: RigidBody2D) -> void:
 		spawn_player_cookie()
 		player_thrown_cookies_counter += 1
 	
+	body.thrown = true
 	update_score()
 
 func _on_player_cookie_spawn_area_body_entered(body: RigidBody2D) -> void:
 	player_cookie_holder_pot.append(body)
+	body.thrown = false
 
 func _on_enemy_cookie_spawn_area_body_exited(body: RigidBody2D) -> void:
 	body.collision_mask = 1
@@ -308,10 +310,12 @@ func _on_enemy_cookie_spawn_area_body_exited(body: RigidBody2D) -> void:
 	if Global.enemy_total_cookies > 0 and enemy_cookie_holder_pot.size() < 1:
 		spawn_enemy_cookie()
 	
+	body.thrown = true
 	update_score()
 
 func _on_enemy_cookie_spawn_area_body_entered(body: RigidBody2D) -> void:
 	enemy_cookie_holder_pot.append(body)
+	body.thrown = false
 	body.add_to_group("enemy_cookie")
 
 func _on_bet_phase_timer_timeout() -> void:
