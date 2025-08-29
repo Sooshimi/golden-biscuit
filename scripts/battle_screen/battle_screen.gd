@@ -64,7 +64,7 @@ func _process(delta) -> void:
 		print($MainMenuMusic.volume_db)
 		if $MainMenuMusic.volume_db > main_loop_bus_volume:
 			$MainMenuMusic.volume_db -= 0.05
-		if $BackgroundMusic.volume_db <= background_bus_volume:
+		if $BackgroundMusic.volume_db < background_bus_volume:
 			$BackgroundMusic.volume_db += 1.0
 			
 
