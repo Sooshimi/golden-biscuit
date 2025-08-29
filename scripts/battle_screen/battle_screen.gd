@@ -234,11 +234,16 @@ func remove_paw_cookies() -> void:
 	update_roar_cookie_counter()
 	update_score()
 
+func disable_buttons(toggle: bool) -> void:
+	for button in get_tree().get_nodes_in_group("button"):
+		button.disabled = toggle
+
 func _on_paw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
 		player_choice = "paw"
 		$PlayerPanel/PawButtonDefault.hide()
 		$PlayerPanel/PawButtonPressed.show()
+		disable_buttons(true)
 		$PawButtonClick.play()
 		$UI/PickInstructions.hide()
 		battle()
@@ -248,6 +253,7 @@ func _on_claw_button_pressed() -> void:
 		player_choice = "claw"
 		$PlayerPanel/ClawButtonDefault.hide()
 		$PlayerPanel/ClawButtonPressed.show()
+		disable_buttons(true)
 		$ClawButtonClick.play()
 		$UI/PickInstructions.hide()
 		battle()
@@ -257,6 +263,7 @@ func _on_roar_button_pressed() -> void:
 		player_choice = "roar"
 		$PlayerPanel/RoarButtonDefault.hide()
 		$PlayerPanel/RoarButtonPressed.show()
+		disable_buttons(true)
 		$RoarButtonClick.play()
 		$UI/PickInstructions.hide()
 		battle()
@@ -352,6 +359,7 @@ func _on_result_timer_timeout() -> void:
 	player_result_label.text = ""
 	enemy_result_label.text = ""
 	bet_phase_label.text = "Place your cookies!"
+	disable_buttons(false)
 	$PlayerPanel/PawButtonDefault.show()
 	$PlayerPanel/PawButtonPressed.hide()
 	$PlayerPanel/ClawButtonDefault.show()
