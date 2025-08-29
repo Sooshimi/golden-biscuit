@@ -34,6 +34,7 @@ var enemy_choice := ""
 var player_choice := ""
 const choices := ["paw", "claw", "roar"]
 var player_thrown_cookies_counter := 0
+var minimum_bet := 5
 
 var paw_cookie_pot := []
 var claw_cookie_pot := []
@@ -92,14 +93,14 @@ func spawn_player_cookie() -> void:
 	var cookie = cookie_scene.instantiate()
 	cookie.global_position = player_cookie_spawn_area.global_position
 	cookie.collision_mask = 0
-	add_child(cookie)
+	call_deferred("add_child", cookie)
 
 func spawn_enemy_cookie() -> void:
 	if PhaseManager.current_state == 0:
 		var cookie = cookie_scene.instantiate()
 		cookie.global_position = enemy_cookie_spawn_area.global_position
 		cookie.collision_mask = 0
-		add_child(cookie)
+		call_deferred("add_child", cookie)
 
 func update_score() -> void:
 	player_cookie_counter.text = str(Global.player_total_cookies)
@@ -172,8 +173,8 @@ func start_result_phase() -> void:
 	$UI/PickInstructions.hide()
 	
 	# MINIMUM BET
-	if player_thrown_cookies_counter <= 5 and Global.player_total_cookies > 5:
-		Global.player_total_cookies -= 5
+	if player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet:
+		Global.player_total_cookies -= minimum_bet
 		update_score()
 	
 	# GAME OVER
@@ -197,7 +198,7 @@ func remove_roar_cookies() -> void:
 	
 	for body in roar_cookie_area.get_overlapping_bodies():
 		body.queue_free()
-		roar_cookie_area.get_overlapping_bodies().erase(0)
+		#roar_cookie_area.get_overlapping_bodies().erase(0)
 	
 	update_roar_cookie_counter()
 	update_score()
@@ -208,7 +209,7 @@ func remove_claw_cookies() -> void:
 	
 	for body in claw_cookie_area.get_overlapping_bodies():
 		body.queue_free()
-		claw_cookie_area.get_overlapping_bodies().erase(0)
+		#claw_cookie_area.get_overlapping_bodies().erase(0)
 	
 	update_claw_cookie_counter()
 	update_score()
@@ -219,7 +220,7 @@ func remove_paw_cookies() -> void:
 	
 	for body in paw_cookie_area.get_overlapping_bodies():
 		body.queue_free()
-		paw_cookie_area.get_overlapping_bodies().erase(0)
+		#paw_cookie_area.get_overlapping_bodies().erase(0)
 	
 	update_roar_cookie_counter()
 	update_score()
@@ -251,7 +252,7 @@ func _on_paw_area_body_entered(body: RigidBody2D) -> void:
 	update_paw_cookie_counter()
 
 # COOKIES EXITS PAW AREA
-func _on_paw_area_body_exited(body: RigidBody2D) -> void:
+func _on_paw_area_body_exited(_body: RigidBody2D) -> void:
 	if paw_cookie_pot.size() > 0:
 		paw_cookie_pot.remove_at(0)
 	update_paw_cookie_counter()
@@ -262,7 +263,7 @@ func _on_claw_area_body_entered(body: RigidBody2D) -> void:
 	update_claw_cookie_counter()
 
 # COOKIES EXITS CLAW AREA
-func _on_claw_area_body_exited(body: RigidBody2D) -> void:
+func _on_claw_area_body_exited(_body: RigidBody2D) -> void:
 	if claw_cookie_pot.size() > 0:
 		claw_cookie_pot.remove_at(0)
 	update_claw_cookie_counter()
@@ -273,7 +274,7 @@ func _on_roar_area_body_entered(body: RigidBody2D) -> void:
 	update_roar_cookie_counter()
 
 # COOKIES EXITS ROAR AREA
-func _on_roar_area_body_exited(body: RigidBody2D) -> void:
+func _on_roar_area_body_exited(_body: RigidBody2D) -> void:
 	if roar_cookie_pot.size() > 0:
 		roar_cookie_pot.remove_at(0)
 	update_roar_cookie_counter()

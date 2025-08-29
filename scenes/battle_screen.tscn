@@ -21,7 +21,7 @@
 size = Vector2(102.594, 118.75)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jkca0"]
-radius = 21.0
+radius = 15.1327
 
 [node name="Battle Screen" type="Node2D"]
 script = ExtResource("1_jkca0")
@@ -187,7 +187,7 @@ offset_right = 336.0
 offset_bottom = 357.0
 scale = Vector2(1, 0.76)
 
-[node name="Roarbutton" type="Button" parent="UI"]
+[node name="RoarButton" type="Button" parent="UI"]
 modulate = Color(1, 1, 1, 0)
 offset_left = 349.0
 offset_top = 322.0
@@ -261,7 +261,7 @@ position = Vector2(315, 268)
 shape = SubResource("CircleShape2D_jkca0")
 
 [node name="EnemyCookieSpawnArea" type="Area2D" parent="UI"]
-position = Vector2(311, 17)
+position = Vector2(316, 17)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UI/EnemyCookieSpawnArea"]
 shape = SubResource("CircleShape2D_jkca0")
@@ -386,7 +386,7 @@ vertical_alignment = 1
 [connection signal="body_exited" from="BetArea/RoarArea" to="." method="_on_roar_area_body_exited"]
 [connection signal="pressed" from="UI/PawButton" to="." method="_on_paw_button_pressed"]
 [connection signal="pressed" from="UI/ClawButton" to="." method="_on_claw_button_pressed"]
-[connection signal="pressed" from="UI/Roarbutton" to="." method="_on_roar_button_pressed"]
+[connection signal="pressed" from="UI/RoarButton" to="." method="_on_roar_button_pressed"]
 [connection signal="body_entered" from="UI/PlayerCookieSpawnArea" to="." method="_on_player_cookie_spawn_area_body_entered"]
 [connection signal="body_exited" from="UI/PlayerCookieSpawnArea" to="." method="_on_player_cookie_spawn_area_body_exited"]
 [connection signal="body_entered" from="UI/EnemyCookieSpawnArea" to="." method="_on_enemy_cookie_spawn_area_body_entered"]

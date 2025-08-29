@@ -10,13 +10,13 @@ var thrown := false
 var throw_velocity := Vector2.ZERO
 var throw_velocity_reduce := 3
 var base_angle := 90.0 # Aim straight down
-var spread_angle := 60.0  # cone half-angle on either side
+var spread_angle := 65.0  # cone half-angle on either side
 var random_angle
 var speed := 200
 var min_cookie_throw_delay := 0.2
 var max_cookie_throw_delay := 1.5
 var min_cookie_throw_distance := 0.5
-var max_cookie_throw_distance := 1.0
+var max_cookie_throw_distance := 0.9
 
 func _ready() -> void:
 	linear_damp = 5.0

@@ -5,15 +5,15 @@
 [ext_resource type="AudioStream" uid="uid://bfkqa0cecxndi" path="res://audio/SFX/objects/bisc_throw.mp3" id="3_2rrt0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_on5vl"]
-radius = 8.0
-height = 22.0
+radius = 9.0
+height = 24.0
 
 [node name="Cookie" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_yys3m")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.335, 1.335)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_2rrt0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
