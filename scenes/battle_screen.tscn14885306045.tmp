@@ -509,7 +509,7 @@ region_enabled = true
 region_rect = Rect2(467, 36, 25, 19)
 
 [node name="RoarButtonDefault" type="Sprite2D" parent="PlayerPanel"]
-position = Vector2(28.8889, 16.1111)
+position = Vector2(28.8722, 16)
 scale = Vector2(0.833333, 0.833333)
 texture = ExtResource("15_20e4q")
 region_enabled = true
@@ -517,7 +517,7 @@ region_rect = Rect2(192, 36, 24, 20)
 
 [node name="RoarButtonPressed" type="Sprite2D" parent="PlayerPanel"]
 visible = false
-position = Vector2(28.4546, 15.7417)
+position = Vector2(28.8722, 16)
 scale = Vector2(0.833333, 0.833333)
 texture = ExtResource("15_20e4q")
 region_enabled = true
