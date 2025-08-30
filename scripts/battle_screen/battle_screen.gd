@@ -417,10 +417,10 @@ func _on_bet_phase_timer_timeout() -> void:
 
 func _on_result_timer_timeout() -> void:
 	PhaseManager.current_state = 0
+	player_thrown_cookies_counter = 0
 	print("Current Phase: ", PhaseManager.current_state, " - result timer time out")
 	player_win = false
 	enemy_win = false
-	player_thrown_cookies_counter = 0
 	bet_phase_label.text = "Place your cookies!"
 	disable_buttons(false)
 	cookie_collect_trigger = false
@@ -486,7 +486,8 @@ func _on_cookie_collect_timer_timeout():
 				$LoseSound.play()
 	
 	# MINIMUM BET WITH PENALTY
-	if player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet:
+	if player_thrown_cookies_counter < minimum_bet and Global.player_total_cookies > minimum_bet:
+		print(player_thrown_cookies_counter)
 		Global.player_total_cookies -= minimum_bet_penalty
 		$BetPenalty.show()
 		update_score()
