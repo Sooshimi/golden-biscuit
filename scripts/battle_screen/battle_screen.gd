@@ -41,6 +41,7 @@ var trinity_default_position_x := 77.0
 var cookie_collect_speed = 500
 var player_win: bool
 var enemy_win: bool
+var liam_dialogue_hide_position := Vector2(0.0, -190.0)
 
 var paw_cookie_pot := []
 var claw_cookie_pot := []
@@ -76,6 +77,7 @@ func _process(delta: float) -> void:
 	
 	# COLLECT COOKIES
 	if PhaseManager.current_state == 2 and player_win:
+		liam_dialogue_slide_in(delta)
 		if player_choice == "paw":
 			collect_cookies(paw_cookie_area)
 		elif player_choice == "claw":
@@ -83,12 +85,19 @@ func _process(delta: float) -> void:
 		elif player_choice == "roar":
 			collect_cookies(roar_cookie_area)
 	elif PhaseManager.current_state == 2 and enemy_win:
+		liam_dialogue_slide_in(delta)
 		if enemy_choice == "paw":
 			collect_cookies(paw_cookie_area)
 		elif enemy_choice == "claw":
 			collect_cookies(claw_cookie_area)
 		elif enemy_choice == "roar":
 			collect_cookies(roar_cookie_area)
+
+func liam_dialogue_slide_in(delta: float) -> void:
+	$LiamDialogueUI.global_position = lerp($LiamDialogueUI.global_position, Vector2.ZERO, delta * 5)
+
+func liam_dialogue_slide_out(delta: float) -> void:
+	$LiamDialogueUI.global_position = lerp($LiamDialogueUI.global_position, liam_dialogue_hide_position, delta * 5)
 
 func collect_cookies(cookie_area: Node) -> void:
 	for body in cookie_area.get_overlapping_bodies():
@@ -173,6 +182,7 @@ func battle() -> void:
 			player_win = true
 			enemy_win = false
 			disable_buttons(true)
+			$LiamDialogueUI/DelayTimer.start()
 			Global.player_total_cookies += roar_cookie_pot.size()
 			remove_roar_cookies()
 			start_result_phase()
@@ -184,6 +194,7 @@ func battle() -> void:
 			player_win = true
 			enemy_win = false
 			disable_buttons(true)
+			$LiamDialogueUI/DelayTimer.start()
 			Global.player_total_cookies += paw_cookie_pot.size()
 			remove_paw_cookies()
 			start_result_phase()
@@ -195,6 +206,7 @@ func battle() -> void:
 			player_win = true
 			enemy_win = false
 			disable_buttons(true)
+			$LiamDialogueUI/DelayTimer.start()
 			Global.player_total_cookies += claw_cookie_pot.size()
 			remove_claw_cookies()
 			start_result_phase()
@@ -206,6 +218,7 @@ func battle() -> void:
 			player_win = false
 			enemy_win = true
 			disable_buttons(true)
+			$LiamDialogueUI/DelayTimer.start()
 			Global.enemy_total_cookies += roar_cookie_pot.size()
 			remove_roar_cookies()
 			start_result_phase()
@@ -217,6 +230,7 @@ func battle() -> void:
 			player_win = false
 			enemy_win = true
 			disable_buttons(true)
+			$LiamDialogueUI/DelayTimer.start()
 			Global.enemy_total_cookies += paw_cookie_pot.size()
 			remove_paw_cookies()
 			start_result_phase()
@@ -228,6 +242,7 @@ func battle() -> void:
 			player_win = false
 			enemy_win = true
 			disable_buttons(true)
+			$LiamDialogueUI/DelayTimer.start()
 			Global.enemy_total_cookies += claw_cookie_pot.size()
 			remove_claw_cookies()
 			start_result_phase()
@@ -297,11 +312,13 @@ func _on_paw_button_pressed() -> void:
 		player_choice = "paw"
 		$PawButtonClick.play()
 		$PawSound.play()
-		battle()
+		
 		if player_choice != enemy_choice:
 			$PlayerPanel/PawButtonDefault.hide()
 			$PlayerPanel/PawButtonPressed.show()
 		$UI/PickInstructions.hide()
+		
+		battle()
 
 func _on_claw_button_pressed() -> void:
 	if PhaseManager.current_state == 1:
