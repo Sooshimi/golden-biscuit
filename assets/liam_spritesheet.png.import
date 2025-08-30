@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmd32ian301m2"
-path="res://.godot/imported/Liam.png-ebcacef8c5b3cb3e8de8cc404dd8b189.ctex"
+uid="uid://dpor62qck6hvi"
+path="res://.godot/imported/liam_spritesheet.png-573ccf6dab24ab3bc65617f18ac1577c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Liam.png"
-dest_files=["res://.godot/imported/Liam.png-ebcacef8c5b3cb3e8de8cc404dd8b189.ctex"]
+source_file="res://assets/liam_spritesheet.png"
+dest_files=["res://.godot/imported/liam_spritesheet.png-573ccf6dab24ab3bc65617f18ac1577c.ctex"]
 
 [params]
 
