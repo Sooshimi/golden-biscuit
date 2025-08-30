@@ -105,10 +105,25 @@ func _process(delta: float) -> void:
 			remove_roar_cookies()
 			collect_cookies(roar_cookie_area)
 	elif PhaseManager.current_state == 2 and not player_win and not enemy_win and cookie_collect_trigger:
-			$UI/DrawInstructionLabel.text = "Draw!"
+		$UI/DrawInstructionLabel.text = "Draw!"
+		check_game_over()
 
 	if PhaseManager.current_state == 0 and not cookie_collect_trigger:
 		liam_dialogue_slide_out(delta)
+
+func check_game_over() -> void:
+	if Global.player_total_cookies < 0 or Global.enemy_total_cookies < 0:
+		print("GAME OVER")
+		PhaseManager.current_state = 3
+		game_over.show()
+		$ResultTimer.stop()
+	
+	if Global.enemy_total_cookies < 0:
+		game_over_result.text = "You win!"
+		$WinSound.play()
+	elif Global.player_total_cookies < 0:
+		game_over_result.text = "You lose!"
+		$LoseSound.play()
 
 func liam_dialogue_slide_in(delta: float) -> void:
 	$LiamDialogueUI.global_position = lerp($LiamDialogueUI.global_position, Vector2.ZERO, delta * 5)
@@ -117,6 +132,8 @@ func liam_dialogue_slide_out(delta: float) -> void:
 	$LiamDialogueUI.global_position = lerp($LiamDialogueUI.global_position, liam_dialogue_hide_position, delta * 5)
 
 func collect_cookies(cookie_area: Node) -> void:
+	check_game_over()
+	
 	if cookie_collect_trigger:
 		for body in cookie_area.get_overlapping_bodies():
 			body.add_to_group("cookie_won")
@@ -480,16 +497,3 @@ func _on_cookie_collect_timer_timeout():
 		Global.player_total_cookies -= minimum_bet_penalty
 		$BetPenalty.show()
 		update_score()
-	
-	if PhaseManager.current_state == 2 and cookie_collect_trigger:
-		if Global.player_total_cookies == 0 or Global.enemy_total_cookies == 0:
-			print("GAME OVER")
-			PhaseManager.current_state = 3
-			game_over.show()
-			$ResultTimer.stop()
-			if Global.player_total_cookies > Global.enemy_total_cookies:
-				game_over_result.text = "You win!"
-				$WinSound.play()
-			else:
-				game_over_result.text = "You lose!"
-				$LoseSound.play()
