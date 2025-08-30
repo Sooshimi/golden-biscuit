@@ -38,6 +38,7 @@ var minimum_bet := 5
 var enemy_panel_default_position_y := 162.0
 var player_panel_default_position_y := 306.0
 var trinity_default_position_x := 77.0
+var cookie_collect_speed = 500
 var player_win: bool
 var enemy_win: bool
 
@@ -90,7 +91,6 @@ func _process(delta: float) -> void:
 			collect_cookies(roar_cookie_area)
 
 func collect_cookies(cookie_area: Node) -> void:
-	var speed = 500
 	for body in cookie_area.get_overlapping_bodies():
 		body.add_to_group("cookie_won")
 		body.set_collision_mask(0)
@@ -99,10 +99,10 @@ func collect_cookies(cookie_area: Node) -> void:
 	for body in get_tree().get_nodes_in_group("cookie_won"):
 		if player_win:
 			var direction = ($PlayerCookieCollector.global_position - body.global_position).normalized()
-			body.linear_velocity = direction * speed
+			body.linear_velocity = direction * cookie_collect_speed
 		elif enemy_win:
 			var direction = ($EnemyCookieCollector.global_position - body.global_position).normalized()
-			body.linear_velocity = direction * speed
+			body.linear_velocity = direction * cookie_collect_speed
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
