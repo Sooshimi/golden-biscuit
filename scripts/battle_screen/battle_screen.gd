@@ -113,7 +113,6 @@ func _process(delta: float) -> void:
 
 func check_game_over() -> void:
 	if Global.player_total_cookies < 0 or Global.enemy_total_cookies < 0:
-		print("GAME OVER")
 		PhaseManager.current_state = 3
 		game_over.show()
 		$ResultTimer.stop()
