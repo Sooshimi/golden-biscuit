@@ -42,6 +42,7 @@ var player_win: bool
 var enemy_win: bool
 var liam_dialogue_hide_position := Vector2(0.0, -190.0)
 var cookie_collect_trigger := false
+var player_total_cookies_at_round_start: int
 
 var paw_cookie_pot := []
 var claw_cookie_pot := []
@@ -62,6 +63,7 @@ func _ready() -> void:
 	$MainMenuMusic.play()
 	PhaseManager.current_state = 0
 	$BetPenalty.text = str("-", minimum_bet_penalty)
+	player_total_cookies_at_round_start = Global.player_total_cookies
 
 func _process(delta: float) -> void:
 	if bet_phase_timer.time_left > 0:
@@ -198,7 +200,7 @@ func battle() -> void:
 			enemy_win = false
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			if not (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+			if not (player_thrown_cookies_counter <= minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 				Global.player_total_cookies += roar_cookie_pot.size()
 			#remove_roar_cookies()
 			start_result_phase()
@@ -209,7 +211,7 @@ func battle() -> void:
 			enemy_win = false
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			if not (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+			if not (player_thrown_cookies_counter <= minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 				Global.player_total_cookies += paw_cookie_pot.size()
 			#remove_paw_cookies()
 			start_result_phase()
@@ -220,33 +222,33 @@ func battle() -> void:
 			enemy_win = false
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			if not (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+			if not (player_thrown_cookies_counter <= minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 				Global.player_total_cookies += claw_cookie_pot.size()
 			#remove_claw_cookies()
 			start_result_phase()
-		elif enemy_choice == "roar" and player_choice == "claw" or (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+		elif enemy_choice == "roar" and player_choice == "claw" or (player_thrown_cookies_counter <= minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 			if Global.enemy_total_cookies == 0:
 				spawn_enemy_cookie()
 			player_win = false
 			enemy_win = true
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			if (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+			if (player_thrown_cookies_counter <= minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 				Global.enemy_total_cookies += roar_cookie_pot.size()
 			#remove_roar_cookies()
 			start_result_phase()
-		elif enemy_choice == "paw" and player_choice == "roar" or (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+		elif enemy_choice == "paw" and player_choice == "roar" or (player_thrown_cookies_counter <= minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 			if Global.enemy_total_cookies == 0:
 				spawn_enemy_cookie()
 			player_win = false
 			enemy_win = true
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			if (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+			if (player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 				Global.enemy_total_cookies += paw_cookie_pot.size()
 			#remove_paw_cookies()
 			start_result_phase()
-		elif enemy_choice == "claw" and player_choice == "paw" or (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+		elif enemy_choice == "claw" and player_choice == "paw" or (player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 			if Global.enemy_total_cookies == 0:
 				spawn_enemy_cookie()
 			player_win = false
@@ -417,6 +419,7 @@ func _on_bet_phase_timer_timeout() -> void:
 func _on_result_timer_timeout() -> void:
 	PhaseManager.current_state = 0
 	player_thrown_cookies_counter = 0
+	player_total_cookies_at_round_start = Global.player_total_cookies
 	print("Current Phase: ", PhaseManager.current_state, " - result timer time out")
 	player_win = false
 	enemy_win = false
@@ -471,6 +474,13 @@ func _on_liam_choice_timer_timeout():
 func _on_cookie_collect_timer_timeout():
 	cookie_collect_trigger = true
 	
+	# MINIMUM BET WITH PENALTY
+	if player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet:
+		print(player_thrown_cookies_counter)
+		Global.player_total_cookies -= minimum_bet_penalty
+		$BetPenalty.show()
+		update_score()
+	
 	if PhaseManager.current_state == 2 and cookie_collect_trigger:
 		if Global.player_total_cookies == 0 or Global.enemy_total_cookies == 0:
 			print("GAME OVER")
@@ -483,10 +493,3 @@ func _on_cookie_collect_timer_timeout():
 			else:
 				game_over_result.text = "You lose!"
 				$LoseSound.play()
-	
-	# MINIMUM BET WITH PENALTY
-	if player_thrown_cookies_counter < minimum_bet and Global.player_total_cookies > minimum_bet:
-		print(player_thrown_cookies_counter)
-		Global.player_total_cookies -= minimum_bet_penalty
-		$BetPenalty.show()
-		update_score()
