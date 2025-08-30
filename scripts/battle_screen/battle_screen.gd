@@ -61,7 +61,7 @@ func _ready() -> void:
 	bet_area.hide()
 	$MainMenuMusic.play()
 	PhaseManager.current_state = 0
-	$BetPenalty.text = str(minimum_bet_penalty)
+	$BetPenalty.text = str("-", minimum_bet_penalty)
 
 func _process(delta: float) -> void:
 	if bet_phase_timer.time_left > 0:
@@ -102,7 +102,9 @@ func _process(delta: float) -> void:
 		elif enemy_choice == "roar":
 			remove_roar_cookies()
 			collect_cookies(roar_cookie_area)
-	
+	elif PhaseManager.current_state == 2 and not player_win and not enemy_win and cookie_collect_trigger:
+			$UI/DrawInstructionLabel.text = "Draw!"
+
 	if PhaseManager.current_state == 0 and not cookie_collect_trigger:
 		liam_dialogue_slide_out(delta)
 
@@ -176,7 +178,8 @@ func update_score() -> void:
 	enemy_cookie_counter.text = str(Global.enemy_total_cookies)
 
 func enemy_turn() -> String:
-	enemy_choice = choices[randi() % choices.size()]
+	#enemy_choice = choices[randi() % choices.size()]
+	enemy_choice = "paw"
 	return enemy_choice
 
 func battle() -> void:
@@ -185,8 +188,10 @@ func battle() -> void:
 		print("enemy_chooses: ", enemy_choice)
 		
 		if player_choice == enemy_choice:
-			$UI/DrawInstructionLabel.text = "Draw! Choose again!"
-			disable_buttons(false)
+			disable_buttons(true)
+			player_win = false
+			enemy_win = false
+			start_result_phase()
 		elif player_choice == "roar" and enemy_choice == "claw":
 			if Global.player_total_cookies == 0:
 				spawn_player_cookie()
@@ -297,10 +302,9 @@ func _on_paw_button_pressed() -> void:
 		$PawButtonClick.play()
 		$PawSound.play()
 		battle()
-		if player_choice != enemy_choice:
-			$PlayerPanel/PawButtonDefault.hide()
-			$PlayerPanel/PawButtonPressed.show()
-			$PawEmblem.show()
+		$PlayerPanel/PawButtonDefault.hide()
+		$PlayerPanel/PawButtonPressed.show()
+		$PawEmblem.show()
 		$UI/PickInstructions.hide()
 
 func _on_claw_button_pressed() -> void:
@@ -310,10 +314,9 @@ func _on_claw_button_pressed() -> void:
 		$ClawButtonClick.play()
 		$ClawSound.play()
 		battle()
-		if player_choice != enemy_choice:
-			$PlayerPanel/ClawButtonDefault.hide()
-			$PlayerPanel/ClawButtonPressed.show()
-			$ClawEmblem.show()
+		$PlayerPanel/ClawButtonDefault.hide()
+		$PlayerPanel/ClawButtonPressed.show()
+		$ClawEmblem.show()
 		$UI/PickInstructions.hide()
 
 func _on_roar_button_pressed() -> void:
@@ -323,10 +326,9 @@ func _on_roar_button_pressed() -> void:
 		$RoarButtonClick.play()
 		$RoarSound.play()
 		battle()
-		if player_choice != enemy_choice:
-			$PlayerPanel/RoarButtonDefault.hide()
-			$PlayerPanel/RoarButtonPressed.show()
-			$RoarEmblem.show()
+		$PlayerPanel/RoarButtonDefault.hide()
+		$PlayerPanel/RoarButtonPressed.show()
+		$RoarEmblem.show()
 		$UI/PickInstructions.hide()
 
 # COOKIES ENTERS PAW AREA
@@ -452,19 +454,18 @@ func _on_player_choice_timer_timeout():
 	$LiamChoiceTimer.start()
 
 func _on_liam_choice_timer_timeout():
-	if player_choice != enemy_choice:
-		if enemy_choice == "paw":
-			$PawSound.play()
-			$PawEmblem.show()
-			$LiamPawChoice.show()
-		elif enemy_choice == "claw":
-			$ClawSound.play()
-			$ClawEmblem.show()
-			$LiamClawChoice.show()
-		else:
-			$RoarSound.play()
-			$RoarEmblem.show()
-			$LiamRoarChoice.show()
+	if enemy_choice == "paw":
+		$PawSound.play()
+		$PawEmblem.show()
+		$LiamPawChoice.show()
+	elif enemy_choice == "claw":
+		$ClawSound.play()
+		$ClawEmblem.show()
+		$LiamClawChoice.show()
+	else:
+		$RoarSound.play()
+		$RoarEmblem.show()
+		$LiamRoarChoice.show()
 	
 	$CookieCollectTimer.start()
 
