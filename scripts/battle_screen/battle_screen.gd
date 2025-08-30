@@ -106,12 +106,16 @@ func collect_cookies(cookie_area: Node) -> void:
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
-	menu_transition_timer.start()
 	bet_area.show()
 	menu.hide()
 	$BackgroundMusic.volume_db = -30.0
 	$BackgroundMusic.play()
 	$EnterRingSFX.play()
+	menu_transition_timer.start()
+
+func start_game() -> void:
+	#menu_transition_timer.start()
+	pass
 
 func _on_menu_transition_timer_timeout() -> void:
 	Global.game_start = true
