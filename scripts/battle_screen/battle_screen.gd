@@ -144,9 +144,11 @@ func collect_cookies(cookie_area: Node) -> void:
 			if enemy_win or (player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 				var direction = ($EnemyCookieCollector.global_position - body.global_position).normalized()
 				body.linear_velocity = direction * cookie_collect_speed
+				$LoseSound.play()
 			else:
 				var direction = ($PlayerCookieCollector.global_position - body.global_position).normalized()
 				body.linear_velocity = direction * cookie_collect_speed
+				$WinSound.play()
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
