@@ -109,7 +109,7 @@ func _on_start_game_button_pressed() -> void:
 	menu_transition_timer.start()
 	bet_area.show()
 	menu.hide()
-	$BackgroundMusic.volume_db = -80.0
+	$BackgroundMusic.volume_db = -30.0
 	$BackgroundMusic.play()
 	$EnterRingSFX.play()
 
