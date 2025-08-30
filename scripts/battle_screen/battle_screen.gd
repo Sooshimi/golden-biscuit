@@ -33,6 +33,7 @@ var player_choice := ""
 const choices := ["paw", "claw", "roar"]
 var player_thrown_cookies_counter := 0
 var minimum_bet := 5
+var minimum_bet_penalty := 10
 var enemy_panel_default_position_y := 162.0
 var player_panel_default_position_y := 306.0
 var trinity_default_position_x := 77.0
@@ -60,6 +61,7 @@ func _ready() -> void:
 	bet_area.hide()
 	$MainMenuMusic.play()
 	PhaseManager.current_state = 0
+	$BetPenalty.text = str(minimum_bet_penalty)
 
 func _process(delta: float) -> void:
 	if bet_phase_timer.time_left > 0:
@@ -118,11 +120,11 @@ func collect_cookies(cookie_area: Node) -> void:
 			body.set_collision_layer(0)
 			
 		for body in get_tree().get_nodes_in_group("cookie_won"):
-			if player_win:
-				var direction = ($PlayerCookieCollector.global_position - body.global_position).normalized()
-				body.linear_velocity = direction * cookie_collect_speed
-			elif enemy_win:
+			if enemy_win or (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
 				var direction = ($EnemyCookieCollector.global_position - body.global_position).normalized()
+				body.linear_velocity = direction * cookie_collect_speed
+			elif player_win:
+				var direction = ($PlayerCookieCollector.global_position - body.global_position).normalized()
 				body.linear_velocity = direction * cookie_collect_speed
 
 func _on_start_game_button_pressed() -> void:
@@ -192,7 +194,8 @@ func battle() -> void:
 			enemy_win = false
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			Global.player_total_cookies += roar_cookie_pot.size()
+			if not (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+				Global.player_total_cookies += roar_cookie_pot.size()
 			#remove_roar_cookies()
 			start_result_phase()
 		elif player_choice == "paw" and enemy_choice == "roar":
@@ -202,7 +205,8 @@ func battle() -> void:
 			enemy_win = false
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			Global.player_total_cookies += paw_cookie_pot.size()
+			if not (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+				Global.player_total_cookies += paw_cookie_pot.size()
 			#remove_paw_cookies()
 			start_result_phase()
 		elif player_choice == "claw" and enemy_choice == "paw":
@@ -212,30 +216,33 @@ func battle() -> void:
 			enemy_win = false
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			Global.player_total_cookies += claw_cookie_pot.size()
+			if not (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+				Global.player_total_cookies += claw_cookie_pot.size()
 			#remove_claw_cookies()
 			start_result_phase()
-		elif enemy_choice == "roar" and player_choice == "claw":
+		elif enemy_choice == "roar" and player_choice == "claw" or (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
 			if Global.enemy_total_cookies == 0:
 				spawn_enemy_cookie()
 			player_win = false
 			enemy_win = true
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			Global.enemy_total_cookies += roar_cookie_pot.size()
+			if (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+				Global.enemy_total_cookies += roar_cookie_pot.size()
 			#remove_roar_cookies()
 			start_result_phase()
-		elif enemy_choice == "paw" and player_choice == "roar":
+		elif enemy_choice == "paw" and player_choice == "roar" or (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
 			if Global.enemy_total_cookies == 0:
 				spawn_enemy_cookie()
 			player_win = false
 			enemy_win = true
 			disable_buttons(true)
 			$LiamDialogueUI/DelayTimer.start()
-			Global.enemy_total_cookies += paw_cookie_pot.size()
+			if (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
+				Global.enemy_total_cookies += paw_cookie_pot.size()
 			#remove_paw_cookies()
 			start_result_phase()
-		elif enemy_choice == "claw" and player_choice == "paw":
+		elif enemy_choice == "claw" and player_choice == "paw" or (player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet):
 			if Global.enemy_total_cookies == 0:
 				spawn_enemy_cookie()
 			player_win = false
@@ -479,6 +486,6 @@ func _on_cookie_collect_timer_timeout():
 	
 	# MINIMUM BET WITH PENALTY
 	if player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet:
-		Global.player_total_cookies -= minimum_bet
+		Global.player_total_cookies -= minimum_bet_penalty
 		$BetPenalty.show()
 		update_score()

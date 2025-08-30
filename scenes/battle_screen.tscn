@@ -536,7 +536,6 @@ offset_left = 213.0
 offset_top = 235.0
 offset_right = 253.0
 offset_bottom = 256.0
-text = "-5"
 
 [node name="LiamDialogueUI" type="Control" parent="."]
 layout_mode = 3
