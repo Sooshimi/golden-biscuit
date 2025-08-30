@@ -120,10 +120,10 @@ func check_game_over() -> void:
 	
 	if Global.enemy_total_cookies < 0:
 		game_over_result.text = "You win!"
-		$WinSound.play()
+		$WinMusic.play()
 	elif Global.player_total_cookies < 0:
 		game_over_result.text = "You lose!"
-		$LoseSound.play()
+		$LoseMusic.play()
 
 func liam_dialogue_slide_in(delta: float) -> void:
 	$LiamDialogueUI.global_position = lerp($LiamDialogueUI.global_position, Vector2.ZERO, delta * 5)

@@ -1,12 +1,14 @@
-[gd_scene load_steps=40 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=42 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
 [ext_resource type="AudioStream" uid="uid://da5ea5n085l6m" path="res://audio/SFX/Atmosphere/atmos_background.mp3" id="3_6lb5u"]
 [ext_resource type="AudioStream" uid="uid://b228jitbdrhh5" path="res://audio/SFX/stings/enter_ring_start_game.mp3" id="4_jwmpd"]
 [ext_resource type="AudioStream" uid="uid://18qlfyy7swnu" path="res://audio/SFX/stings/winning_sound.mp3" id="5_h607l"]
+[ext_resource type="AudioStream" uid="uid://bs1jol72etg87" path="res://audio/Music/Winning_music.mp3" id="6_c71go"]
 [ext_resource type="AudioStream" uid="uid://b5txc8xotr4h3" path="res://audio/SFX/stings/losing_sound.mp3" id="6_vehr2"]
 [ext_resource type="AudioStream" uid="uid://bct00visjud2s" path="res://audio/SFX/objects/ticking_increment.mp3" id="7_vehr2"]
+[ext_resource type="AudioStream" uid="uid://dbqgfw5hcxeaf" path="res://audio/Music/losing_music.mp3" id="8_bxcsp"]
 [ext_resource type="AudioStream" uid="uid://d1scn5gk2irh6" path="res://audio/SFX/objects/button_press_1.mp3" id="8_ikkpg"]
 [ext_resource type="AudioStream" uid="uid://c2brwgemdwqlp" path="res://audio/SFX/stings/paw_sound.mp3" id="9_c5bog"]
 [ext_resource type="AudioStream" uid="uid://d4g4d1o8qvydb" path="res://audio/SFX/objects/button_press_3.mp3" id="9_lskjy"]
@@ -117,8 +119,14 @@ stream = ExtResource("4_jwmpd")
 [node name="WinSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_h607l")
 
+[node name="WinMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_c71go")
+
 [node name="LoseSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_vehr2")
+
+[node name="LoseMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_bxcsp")
 
 [node name="BetTickingIncrement" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_vehr2")
