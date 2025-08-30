@@ -277,9 +277,6 @@ func remove_roar_cookies() -> void:
 	roar_cookie_pot = []
 	roar_cookie_counter.text = str(0)
 	
-	#for body in roar_cookie_area.get_overlapping_bodies():
-		#body.queue_free()
-	
 	update_roar_cookie_counter()
 	update_score()
 
@@ -287,18 +284,12 @@ func remove_claw_cookies() -> void:
 	claw_cookie_pot = []
 	claw_cookie_counter.text = str(0)
 	
-	#for body in claw_cookie_area.get_overlapping_bodies():
-		#body.queue_free()
-	
 	update_claw_cookie_counter()
 	update_score()
 
 func remove_paw_cookies() -> void:
 	paw_cookie_pot = []
 	paw_cookie_counter.text = str(0)
-	
-	#for body in paw_cookie_area.get_overlapping_bodies():
-		#body.queue_free()
 	
 	update_roar_cookie_counter()
 	update_score()
