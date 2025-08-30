@@ -42,6 +42,7 @@ var cookie_collect_speed = 500
 var player_win: bool
 var enemy_win: bool
 var liam_dialogue_hide_position := Vector2(0.0, -190.0)
+var cookie_collect_trigger := false
 
 var paw_cookie_pot := []
 var claw_cookie_pot := []
@@ -77,7 +78,8 @@ func _process(delta: float) -> void:
 	
 	# COLLECT COOKIES
 	if PhaseManager.current_state == 2 and player_win:
-		liam_dialogue_slide_in(delta)
+		if cookie_collect_trigger:
+			liam_dialogue_slide_in(delta)
 		if player_choice == "paw":
 			collect_cookies(paw_cookie_area)
 		elif player_choice == "claw":
@@ -85,13 +87,17 @@ func _process(delta: float) -> void:
 		elif player_choice == "roar":
 			collect_cookies(roar_cookie_area)
 	elif PhaseManager.current_state == 2 and enemy_win:
-		liam_dialogue_slide_in(delta)
+		if cookie_collect_trigger:
+			liam_dialogue_slide_in(delta)
 		if enemy_choice == "paw":
 			collect_cookies(paw_cookie_area)
 		elif enemy_choice == "claw":
 			collect_cookies(claw_cookie_area)
 		elif enemy_choice == "roar":
 			collect_cookies(roar_cookie_area)
+	
+	if PhaseManager.current_state == 0 and not cookie_collect_trigger:
+		liam_dialogue_slide_out(delta)
 
 func liam_dialogue_slide_in(delta: float) -> void:
 	$LiamDialogueUI.global_position = lerp($LiamDialogueUI.global_position, Vector2.ZERO, delta * 5)
@@ -100,18 +106,19 @@ func liam_dialogue_slide_out(delta: float) -> void:
 	$LiamDialogueUI.global_position = lerp($LiamDialogueUI.global_position, liam_dialogue_hide_position, delta * 5)
 
 func collect_cookies(cookie_area: Node) -> void:
-	for body in cookie_area.get_overlapping_bodies():
-		body.add_to_group("cookie_won")
-		body.set_collision_mask(0)
-		body.set_collision_layer(0)
-		
-	for body in get_tree().get_nodes_in_group("cookie_won"):
-		if player_win:
-			var direction = ($PlayerCookieCollector.global_position - body.global_position).normalized()
-			body.linear_velocity = direction * cookie_collect_speed
-		elif enemy_win:
-			var direction = ($EnemyCookieCollector.global_position - body.global_position).normalized()
-			body.linear_velocity = direction * cookie_collect_speed
+	if cookie_collect_trigger:
+		for body in cookie_area.get_overlapping_bodies():
+			body.add_to_group("cookie_won")
+			body.set_collision_mask(0)
+			body.set_collision_layer(0)
+			
+		for body in get_tree().get_nodes_in_group("cookie_won"):
+			if player_win:
+				var direction = ($PlayerCookieCollector.global_position - body.global_position).normalized()
+				body.linear_velocity = direction * cookie_collect_speed
+			elif enemy_win:
+				var direction = ($EnemyCookieCollector.global_position - body.global_position).normalized()
+				body.linear_velocity = direction * cookie_collect_speed
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
@@ -271,7 +278,9 @@ func start_result_phase() -> void:
 				game_over_result.text = "You lose!"
 				$LoseSound.play()
 		else:
+			# BATTLE PHASE STARTS
 			result_timer.start()
+			$PlayerChoiceTimer.start()
 
 func remove_roar_cookies() -> void:
 	roar_cookie_pot = []
@@ -307,6 +316,7 @@ func _on_paw_button_pressed() -> void:
 		if player_choice != enemy_choice:
 			$PlayerPanel/PawButtonDefault.hide()
 			$PlayerPanel/PawButtonPressed.show()
+			$PawEmblem.show()
 		$UI/PickInstructions.hide()
 		
 		battle()
@@ -320,6 +330,7 @@ func _on_claw_button_pressed() -> void:
 		if player_choice != enemy_choice:
 			$PlayerPanel/ClawButtonDefault.hide()
 			$PlayerPanel/ClawButtonPressed.show()
+			$ClawEmblem.show()
 		$UI/PickInstructions.hide()
 
 func _on_roar_button_pressed() -> void:
@@ -331,6 +342,7 @@ func _on_roar_button_pressed() -> void:
 		if player_choice != enemy_choice:
 			$PlayerPanel/RoarButtonDefault.hide()
 			$PlayerPanel/RoarButtonPressed.show()
+			$RoarEmblem.show()
 		$UI/PickInstructions.hide()
 
 # COOKIES ENTERS PAW AREA
@@ -427,7 +439,14 @@ func _on_result_timer_timeout() -> void:
 	enemy_result_label.text = ""
 	bet_phase_label.text = "Place your cookies!"
 	disable_buttons(false)
+	cookie_collect_trigger = false
 	$BetPenalty.hide()
+	$PawEmblem.hide()
+	$ClawEmblem.hide()
+	$RoarEmblem.hide()
+	$LiamPawChoice.hide()
+	$LiamClawChoice.hide()
+	$LiamRoarChoice.hide()
 	$PlayerPanel/PawButtonDefault.show()
 	$PlayerPanel/PawButtonPressed.hide()
 	$PlayerPanel/ClawButtonDefault.show()
@@ -442,3 +461,26 @@ func _on_play_again_button_pressed():
 	get_tree().reload_current_scene()
 	Global.player_total_cookies = Global.default
 	Global.player_total_cookies = Global.default
+
+func _on_player_choice_timer_timeout():
+	$LiamChoiceTimer.start()
+
+func _on_liam_choice_timer_timeout():
+	if player_choice != enemy_choice:
+		if enemy_choice == "paw":
+			$PawSound.play()
+			$PawEmblem.show()
+			$LiamPawChoice.show()
+		elif enemy_choice == "claw":
+			$ClawSound.play()
+			$ClawEmblem.show()
+			$LiamClawChoice.show()
+		else:
+			$RoarSound.play()
+			$RoarEmblem.show()
+			$LiamRoarChoice.show()
+	
+	$CookieCollectTimer.start()
+
+func _on_cookie_collect_timer_timeout():
+	cookie_collect_trigger = true
