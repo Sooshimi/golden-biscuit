@@ -233,9 +233,10 @@ func start_result_phase() -> void:
 	print("Current Phase: ", PhaseManager.current_state, " - result phase starts")
 	$UI/PickInstructions.hide()
 	
-	# MINIMUM BET
+	# MINIMUM BET WITH PENALTY
 	if player_thrown_cookies_counter <= minimum_bet and Global.player_total_cookies > minimum_bet:
 		Global.player_total_cookies -= minimum_bet
+		$BetPenalty.show()
 		update_score()
 	
 	# GAME OVER
@@ -412,6 +413,7 @@ func _on_result_timer_timeout() -> void:
 	enemy_result_label.text = ""
 	bet_phase_label.text = "Place your cookies!"
 	disable_buttons(false)
+	$BetPenalty.hide()
 	$PlayerPanel/PawButtonDefault.show()
 	$PlayerPanel/PawButtonPressed.hide()
 	$PlayerPanel/ClawButtonDefault.show()

@@ -382,6 +382,15 @@ position = Vector2(315, 392)
 [node name="EnemyCookieCollector" type="Marker2D" parent="."]
 position = Vector2(314, -28)
 
+[node name="BetPenalty" type="Label" parent="."]
+visible = false
+modulate = Color(0.884342, 0, 0.0115613, 1)
+offset_left = 213.0
+offset_top = 235.0
+offset_right = 253.0
+offset_bottom = 256.0
+text = "-5"
+
 [node name="GameOver" type="CanvasLayer" parent="."]
 visible = false
 
