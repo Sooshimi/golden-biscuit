@@ -50,6 +50,8 @@ stream = ExtResource("6_vehr2")
 
 [node name="BetTickingIncrement" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_vehr2")
+volume_db = 2.941
+bus = &"ticking count down increment"
 
 [node name="PawButtonClick" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_ikkpg")
@@ -62,12 +64,15 @@ stream = ExtResource("9_lskjy")
 
 [node name="ClawSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_tjy5n")
+bus = &"Roar claw and paw"
 
 [node name="RoarButtonClick" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_lskjy")
+bus = &"Roar claw and paw"
 
 [node name="RoarSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_qo5xu")
+bus = &"Roar claw and paw"
 
 [node name="Menu" type="CanvasLayer" parent="."]
 
