@@ -1,6 +1,7 @@
-[gd_scene load_steps=43 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=44 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
+[ext_resource type="AudioStream" uid="uid://b311aofscatbd" path="res://audio/Music/main_menu.mp3" id="2_2kk4u"]
 [ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
 [ext_resource type="AudioStream" uid="uid://da5ea5n085l6m" path="res://audio/SFX/Atmosphere/atmos_background.mp3" id="3_6lb5u"]
 [ext_resource type="AudioStream" uid="uid://b228jitbdrhh5" path="res://audio/SFX/stings/enter_ring_start_game.mp3" id="4_jwmpd"]
@@ -106,6 +107,11 @@ animations = [{
 script = ExtResource("1_jkca0")
 
 [node name="MainMenuMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_2kk4u")
+bus = &"Main menu"
+parameters/looping = true
+
+[node name="MainLoopMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_jwmpd")
 bus = &"Main Loop"
 parameters/looping = true

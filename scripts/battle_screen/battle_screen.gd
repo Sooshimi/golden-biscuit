@@ -55,9 +55,12 @@ var background_bus = AudioServer.get_bus_index("Background")
 var background_bus_volume = AudioServer.get_bus_volume_db(background_bus)
 var main_loop_bus = AudioServer.get_bus_index("Main Loop")
 var main_loop_bus_volume = AudioServer.get_bus_volume_db(main_loop_bus)
+var main_menu_bus = AudioServer.get_bus_index("Main menu")
+var main_menu_bus_volume = AudioServer.get_bus_volume_db(main_menu_bus)
 
 func _ready() -> void:
 	Global.game_start = false
+	start_game_button_pressed = false
 	update_score()
 	bet_area.hide()
 	$MainMenuMusic.play()
@@ -74,8 +77,11 @@ func _process(delta: float) -> void:
 	if start_game_button_pressed:
 		camera_zoom(delta)
 		panels_slide_in(delta)
-		if $MainMenuMusic.volume_db > main_loop_bus_volume:
-			$MainMenuMusic.volume_db -= 0.05
+		$MainMenuMusic.volume_db -= 0.1
+		if $MainMenuMusic.volume_db < -30.0:
+			$MainMenuMusic.stop()
+		if $MainLoopMusic.volume_db < main_loop_bus_volume:
+			$MainLoopMusic.volume_db += 0.5
 		if $BackgroundMusic.volume_db < background_bus_volume:
 			$BackgroundMusic.volume_db += 1.0
 	
@@ -153,6 +159,8 @@ func _on_start_game_button_pressed() -> void:
 	menu.hide()
 	$BackgroundMusic.volume_db = -30.0
 	$BackgroundMusic.play()
+	$MainLoopMusic.volume_db = -30.0
+	$MainLoopMusic.play()
 	$EnterRingSFX.play()
 	menu_transition_timer.start()
 
