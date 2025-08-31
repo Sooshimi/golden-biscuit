@@ -434,7 +434,7 @@ theme_override_font_sizes/font_size = 13
 text = "Choose Paw, Claw, or Roar!"
 
 [node name="BetPhaseTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 10.0
 one_shot = true
 
 [node name="ResultTimer" type="Timer" parent="."]

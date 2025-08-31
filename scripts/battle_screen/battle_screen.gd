@@ -118,17 +118,26 @@ func _process(delta: float) -> void:
 		liam_dialogue_slide_out(delta)
 
 func check_game_over() -> void:
-	if Global.player_total_cookies < 0 or Global.enemy_total_cookies < 0:
-		PhaseManager.current_state = 3
-		game_over.show()
-		$ResultTimer.stop()
-	
-	if Global.enemy_total_cookies < 0:
-		game_over_result.text = "You win!"
-		$WinMusic.play()
-	elif Global.player_total_cookies < 0:
-		game_over_result.text = "You lose!"
-		$LoseMusic.play()
+	if cookie_collect_trigger:
+		# GAME WIN/LOSE CONDITION
+		if Global.player_total_cookies == 0 and Global.enemy_total_cookies == 0:
+			pass
+		elif Global.player_total_cookies <= 0 or Global.enemy_total_cookies <= 0:
+			PhaseManager.current_state = 3
+			game_over.show()
+			$ResultTimer.stop()
+			if Global.enemy_total_cookies <= 0:
+				game_over_result.text = "You win!"
+				$WinMusic.play()
+				$MainLoopMusic.stop()
+				$BackgroundMusic.stop()
+				$UI/GetReadyLabel.hide()
+			elif Global.player_total_cookies <= 0:
+				game_over_result.text = "You lose!"
+				$LoseMusic.play()
+				$MainLoopMusic.stop()
+				$BackgroundMusic.stop()
+				$UI/GetReadyLabel.hide()
 
 func liam_dialogue_slide_in(delta: float) -> void:
 	$LiamDialogueUI.global_position = lerp($LiamDialogueUI.global_position, Vector2.ZERO, delta * 5)
@@ -193,7 +202,7 @@ func spawn_player_cookie() -> void:
 	call_deferred("add_child", cookie)
 
 func spawn_enemy_cookie() -> void:
-	if PhaseManager.current_state == 0:
+	if PhaseManager.current_state == 0 and not Global.enemy_total_cookies == 0:
 		var cookie = cookie_scene.instantiate()
 		cookie.global_position = enemy_cookie_spawn_area.global_position
 		cookie.collision_mask = 0
@@ -462,6 +471,7 @@ func _on_result_timer_timeout() -> void:
 	$UI/ClawResultLabel.text = ""
 	$UI/RoarResultLabel.text = ""
 	$UI/DrawInstructionLabel.text = ""
+	$UI/GetReadyLabel.hide()
 	$PlayerPanel/PawButtonDefault.show()
 	$PlayerPanel/PawButtonPressed.hide()
 	$PlayerPanel/ClawButtonDefault.show()
@@ -498,13 +508,18 @@ func _on_liam_choice_timer_timeout():
 
 func _on_cookie_collect_timer_timeout():
 	cookie_collect_trigger = true
+	$UI/GetReadyLabel.show()
+	
+	check_game_over()
 	
 	if enemy_win or (player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 		$LoseSound.play()
 		$BiscuitCollectAudio.play()
+		$UI/GetReadyLabel.hide()
 	elif player_win:
 		$WinSound.play()
 		$BiscuitCollectAudio.play()
+		$UI/GetReadyLabel.hide()
 	
 	# MINIMUM BET WITH PENALTY
 	if player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet:
