@@ -1,18 +1,18 @@
 [gd_scene load_steps=44 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
-[ext_resource type="AudioStream" uid="uid://b311aofscatbd" path="res://audio/Music/main_menu.mp3" id="2_2kk4u"]
-[ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
+[ext_resource type="AudioStream" uid="uid://bjrr5tiix61af" path="res://audio/Music/main_loop.ogg" id="2_2kk4u"]
+[ext_resource type="AudioStream" uid="uid://1x7s36218wpi" path="res://audio/Music/main_menu.ogg" id="2_r3ic0"]
 [ext_resource type="AudioStream" uid="uid://da5ea5n085l6m" path="res://audio/SFX/Atmosphere/atmos_background.mp3" id="3_6lb5u"]
 [ext_resource type="AudioStream" uid="uid://b228jitbdrhh5" path="res://audio/SFX/stings/enter_ring_start_game.mp3" id="4_jwmpd"]
 [ext_resource type="AudioStream" uid="uid://18qlfyy7swnu" path="res://audio/SFX/stings/winning_sound.mp3" id="5_h607l"]
-[ext_resource type="AudioStream" uid="uid://bs1jol72etg87" path="res://audio/Music/Winning_music.mp3" id="6_c71go"]
 [ext_resource type="AudioStream" uid="uid://b5txc8xotr4h3" path="res://audio/SFX/stings/losing_sound.mp3" id="6_vehr2"]
+[ext_resource type="AudioStream" uid="uid://bngsqknl64g1m" path="res://audio/Music/Winning_music.ogg" id="7_2kk4u"]
 [ext_resource type="AudioStream" uid="uid://bct00visjud2s" path="res://audio/SFX/objects/ticking_increment.mp3" id="7_vehr2"]
-[ext_resource type="AudioStream" uid="uid://dbqgfw5hcxeaf" path="res://audio/Music/losing_music.mp3" id="8_bxcsp"]
 [ext_resource type="AudioStream" uid="uid://d1scn5gk2irh6" path="res://audio/SFX/objects/button_press_1.mp3" id="8_ikkpg"]
 [ext_resource type="AudioStream" uid="uid://c2brwgemdwqlp" path="res://audio/SFX/stings/paw_sound.mp3" id="9_c5bog"]
 [ext_resource type="AudioStream" uid="uid://d4g4d1o8qvydb" path="res://audio/SFX/objects/button_press_3.mp3" id="9_lskjy"]
+[ext_resource type="AudioStream" uid="uid://bg7winrisyq3r" path="res://audio/Music/losing_music.ogg" id="9_r3ic0"]
 [ext_resource type="Texture2D" uid="uid://bipt1x5h2mpfv" path="res://assets/Background_FINAL1.png" id="10_bgqsx"]
 [ext_resource type="Texture2D" uid="uid://cg38s2l0yinn5" path="res://assets/Chalk_area_PCR_Scribbles1.png" id="11_lskjy"]
 [ext_resource type="Texture2D" uid="uid://cd48jfxxjpfp2" path="res://assets/tutorial_trinity1.png" id="11_p0qi6"]
@@ -28,7 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://lkdqd2heqdx1" path="res://assets/claw_emblem.png" id="16_rhu2l"]
 [ext_resource type="Texture2D" uid="uid://bcn8b3rtja1oa" path="res://assets/roar_emblem.png" id="17_3q6ct"]
 [ext_resource type="Texture2D" uid="uid://cr1qqe57slxjr" path="res://assets/smol_Liam_sticker.png" id="20_rhu2l"]
-[ext_resource type="Script" uid="uid://wyjfjc8ggg8o" path="res://scenes/dialogue.gd" id="21_fxt2d"]
+[ext_resource type="Script" path="res://scenes/dialogue.gd" id="21_fxt2d"]
 [ext_resource type="Texture2D" uid="uid://ce4ck2y1vpa4j" path="res://assets/windows-textbox.png" id="21_qo5xu"]
 [ext_resource type="Texture2D" uid="uid://dpor62qck6hvi" path="res://assets/liam_spritesheet.png" id="21_tjy5n"]
 [ext_resource type="FontFile" uid="uid://cmc5lauyv3e6p" path="res://fonts/Gameplay.ttf" id="24_0sais"]
@@ -106,59 +106,58 @@ animations = [{
 [node name="Battle Screen" type="Node2D"]
 script = ExtResource("1_jkca0")
 
-[node name="MainMenuMusic" type="AudioStreamPlayer2D" parent="."]
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_r3ic0")
+parameters/looping = true
+
+[node name="MainLoopMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_2kk4u")
-bus = &"Main menu"
 parameters/looping = true
 
-[node name="MainLoopMusic" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_jwmpd")
-bus = &"Main Loop"
-parameters/looping = true
-
-[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_6lb5u")
 bus = &"Background"
 
-[node name="EnterRingSFX" type="AudioStreamPlayer2D" parent="."]
+[node name="EnterRingSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jwmpd")
 
-[node name="WinSound" type="AudioStreamPlayer2D" parent="."]
+[node name="WinSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_h607l")
 volume_db = -1.99
 
-[node name="WinMusic" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_c71go")
+[node name="WinMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_2kk4u")
 
-[node name="LoseSound" type="AudioStreamPlayer2D" parent="."]
+[node name="LoseSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_vehr2")
 
-[node name="LoseMusic" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_bxcsp")
+[node name="LoseMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_r3ic0")
+volume_db = -1.319
 
-[node name="BetTickingIncrement" type="AudioStreamPlayer2D" parent="."]
+[node name="BetTickingIncrement" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_vehr2")
 volume_db = 2.941
 
-[node name="PawButtonClick" type="AudioStreamPlayer2D" parent="."]
+[node name="PawButtonClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_ikkpg")
 
-[node name="PawSound" type="AudioStreamPlayer2D" parent="."]
+[node name="PawSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_c5bog")
 
-[node name="ClawButtonClick" type="AudioStreamPlayer2D" parent="."]
+[node name="ClawButtonClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_lskjy")
 
-[node name="ClawSound" type="AudioStreamPlayer2D" parent="."]
+[node name="ClawSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_tjy5n")
 
-[node name="RoarButtonClick" type="AudioStreamPlayer2D" parent="."]
+[node name="RoarButtonClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_lskjy")
 
-[node name="RoarSound" type="AudioStreamPlayer2D" parent="."]
+[node name="RoarSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_qo5xu")
 
-[node name="BiscuitCollectAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BiscuitCollectAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_bxcsp")
 volume_db = -2.488
 
