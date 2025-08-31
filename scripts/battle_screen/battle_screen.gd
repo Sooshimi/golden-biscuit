@@ -514,11 +514,9 @@ func _on_cookie_collect_timer_timeout():
 	if enemy_win or (player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 		$LoseSound.play()
 		$BiscuitCollectAudio.play()
-		$UI/GetReadyLabel.hide()
 	elif player_win:
 		$WinSound.play()
 		$BiscuitCollectAudio.play()
-		$UI/GetReadyLabel.hide()
 	
 	# MINIMUM BET WITH PENALTY
 	if player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet:
