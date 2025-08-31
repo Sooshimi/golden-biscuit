@@ -1,6 +1,6 @@
 extends Node
 
-var default := 50
+var default := 40
 var player_total_cookies = default
 var enemy_total_cookies = default
 var game_start := false
