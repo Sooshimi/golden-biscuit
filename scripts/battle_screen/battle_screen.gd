@@ -213,8 +213,7 @@ func update_score() -> void:
 	enemy_cookie_counter.text = str(Global.enemy_total_cookies)
 
 func enemy_turn() -> String:
-	#enemy_choice = choices[randi() % choices.size()]
-	enemy_choice = "paw"
+	enemy_choice = choices[randi() % choices.size()]
 	return enemy_choice
 
 func battle() -> void:
