@@ -138,7 +138,6 @@ func collect_cookies(cookie_area: Node) -> void:
 			body.add_to_group("cookie_won")
 			body.set_collision_mask(0)
 			body.set_collision_layer(0)
-			body.biscuit_throw = false
 			
 		for body in get_tree().get_nodes_in_group("cookie_won"):
 			if enemy_win or (player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet):
