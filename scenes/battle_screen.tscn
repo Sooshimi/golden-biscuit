@@ -28,7 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://lkdqd2heqdx1" path="res://assets/claw_emblem.png" id="16_rhu2l"]
 [ext_resource type="Texture2D" uid="uid://bcn8b3rtja1oa" path="res://assets/roar_emblem.png" id="17_3q6ct"]
 [ext_resource type="Texture2D" uid="uid://cr1qqe57slxjr" path="res://assets/smol_Liam_sticker.png" id="20_rhu2l"]
-[ext_resource type="Script" path="res://scenes/dialogue.gd" id="21_fxt2d"]
+[ext_resource type="Script" uid="uid://wyjfjc8ggg8o" path="res://scenes/dialogue.gd" id="21_fxt2d"]
 [ext_resource type="Texture2D" uid="uid://ce4ck2y1vpa4j" path="res://assets/windows-textbox.png" id="21_qo5xu"]
 [ext_resource type="Texture2D" uid="uid://dpor62qck6hvi" path="res://assets/liam_spritesheet.png" id="21_tjy5n"]
 [ext_resource type="FontFile" uid="uid://cmc5lauyv3e6p" path="res://fonts/Gameplay.ttf" id="24_0sais"]
