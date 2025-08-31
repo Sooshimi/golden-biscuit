@@ -38,7 +38,6 @@ func _process(delta) -> void:
 	
 	if not selected and linear_velocity.length() < 1:
 		linear_velocity = Vector2.ZERO
-		biscuit_throw_audio.play()
 	
 	if self.is_in_group("enemy_cookie") and cookie_throw_delay_timer.is_stopped():
 		linear_velocity = Vector2.RIGHT.rotated(random_angle) * speed
@@ -49,9 +48,11 @@ func _input(event) -> void:
 			selected = false
 			
 			linear_velocity = throw_velocity / throw_velocity_reduce
+			biscuit_throw_audio.play()
 
 func _on_cookie_throw_delay_timer_timeout():
 	cookie_throw_distance_timer.start(randf_range(min_cookie_throw_distance, max_cookie_throw_distance))
+	biscuit_throw_audio.play()
 
 func _on_cookie_throw_distance_timer_timeout():
 	self.remove_from_group("enemy_cookie")
