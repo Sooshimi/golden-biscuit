@@ -17,6 +17,7 @@ var min_cookie_throw_delay := 0.2
 var max_cookie_throw_delay := 1.5
 var min_cookie_throw_distance := 0.5
 var max_cookie_throw_distance := 0.9
+var biscuit_throw := true
 
 func _ready() -> void:
 	linear_damp = 5.0
@@ -38,7 +39,8 @@ func _process(delta) -> void:
 	
 	if not selected and linear_velocity.length() < 1:
 		linear_velocity = Vector2.ZERO
-		biscuit_throw_audio.play()
+		if biscuit_throw:
+			biscuit_throw_audio.play()
 	
 	if self.is_in_group("enemy_cookie") and cookie_throw_delay_timer.is_stopped():
 		linear_velocity = Vector2.RIGHT.rotated(random_angle) * speed

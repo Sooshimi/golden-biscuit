@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://brayl5720tpcc"]
+[gd_scene load_steps=43 format=3 uid="uid://brayl5720tpcc"]
 
 [ext_resource type="Script" uid="uid://bqrq0kk8352e" path="res://scripts/battle_screen/battle_screen.gd" id="1_jkca0"]
 [ext_resource type="AudioStream" uid="uid://ds24siwhetrtm" path="res://audio/Music/main_loop.mp3" id="2_jwmpd"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bru4o185imugk" path="res://assets/Enemy_Panel_Purple1.png" id="13_bgqsx"]
 [ext_resource type="Texture2D" uid="uid://di3glr466vgou" path="res://assets/paper_button_yellow.png" id="14_20e4q"]
 [ext_resource type="Texture2D" uid="uid://o1hlghtu3582" path="res://assets/Scissors_button_pink.png" id="15_20e4q"]
+[ext_resource type="AudioStream" uid="uid://cpw0v5i2xphwh" path="res://audio/SFX/stings/collect_cookies_stash.mp3" id="15_bxcsp"]
 [ext_resource type="Texture2D" uid="uid://dn2eombl1jjc" path="res://assets/paw_emblem.png" id="15_jd2wk"]
 [ext_resource type="Texture2D" uid="uid://lkdqd2heqdx1" path="res://assets/claw_emblem.png" id="16_rhu2l"]
 [ext_resource type="Texture2D" uid="uid://bcn8b3rtja1oa" path="res://assets/roar_emblem.png" id="17_3q6ct"]
@@ -149,6 +150,9 @@ stream = ExtResource("9_lskjy")
 
 [node name="RoarSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_qo5xu")
+
+[node name="BiscuitCollectAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_bxcsp")
 
 [node name="Menu" type="CanvasLayer" parent="."]
 
@@ -411,7 +415,7 @@ theme_override_font_sizes/font_size = 13
 text = "Choose Paw, Claw, or Roar!"
 
 [node name="BetPhaseTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 7.0
 one_shot = true
 
 [node name="ResultTimer" type="Timer" parent="."]

@@ -138,16 +138,15 @@ func collect_cookies(cookie_area: Node) -> void:
 			body.add_to_group("cookie_won")
 			body.set_collision_mask(0)
 			body.set_collision_layer(0)
+			body.biscuit_throw = false
 			
 		for body in get_tree().get_nodes_in_group("cookie_won"):
 			if enemy_win or (player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet):
 				var direction = ($EnemyCookieCollector.global_position - body.global_position).normalized()
 				body.linear_velocity = direction * cookie_collect_speed
-				$LoseSound.play()
 			else:
 				var direction = ($PlayerCookieCollector.global_position - body.global_position).normalized()
 				body.linear_velocity = direction * cookie_collect_speed
-				$WinSound.play()
 
 func _on_start_game_button_pressed() -> void:
 	start_game_button_pressed = true
@@ -198,7 +197,8 @@ func update_score() -> void:
 	enemy_cookie_counter.text = str(Global.enemy_total_cookies)
 
 func enemy_turn() -> String:
-	enemy_choice = choices[randi() % choices.size()]
+	#enemy_choice = choices[randi() % choices.size()]
+	enemy_choice = "paw"
 	return enemy_choice
 
 func battle() -> void:
@@ -491,6 +491,13 @@ func _on_liam_choice_timer_timeout():
 
 func _on_cookie_collect_timer_timeout():
 	cookie_collect_trigger = true
+	
+	if enemy_win or (player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet):
+		$LoseSound.play()
+		$BiscuitCollectAudio.play()
+	elif player_win:
+		$WinSound.play()
+		$BiscuitCollectAudio.play()
 	
 	# MINIMUM BET WITH PENALTY
 	if player_thrown_cookies_counter < minimum_bet and player_total_cookies_at_round_start > minimum_bet:
