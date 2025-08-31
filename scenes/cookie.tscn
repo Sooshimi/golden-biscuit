@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://eff2113j5yd6" path="res://scripts/cookie.gd" id="1_yys3m"]
 [ext_resource type="Texture2D" uid="uid://bu11ua8ubdb2b" path="res://assets/biscuit_1.png" id="2_2rrt0"]
-[ext_resource type="AudioStream" uid="uid://kkj2rbheee03" path="res://audio/SFX/objects/bisc_throw.mp3" id="3_2rrt0"]
+[ext_resource type="AudioStream" uid="uid://dvogfconlge2m" path="res://audio/SFX/objects/bisc_throw.ogg" id="3_2rrt0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_on5vl"]
 radius = 9.0
@@ -32,10 +32,8 @@ one_shot = true
 [node name="CookieThrowDistanceTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="BiscuitThrowAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BiscuitThrowAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_2rrt0")
-volume_db = -4.0
-pitch_scale = 0.9
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-12.02, -9.24, 23.9, 18.37)
